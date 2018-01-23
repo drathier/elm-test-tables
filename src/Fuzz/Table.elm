@@ -6,22 +6,6 @@ import Test exposing (Test)
 
 
 
-{-
-   -- table of fuzzers, to be run one by one, for testing comparable etc.
-   -- letter fuzzers for a,b,c,d,e,... for non-overlapping arbitrary types
-
-   -- table of unit test arguments, with a fuzzer as well
-   -- table of known edge cases that we don't care about handling
-
-   -- input validator function: (a,b,c) -> Maybe (a,b,c), allowing reordering and rejecting values
-     -- we can put this in another package, and hope to integrate it into elm-test where we can fail tests as flaky if we retry more than e.g. 10 times per unit test.
-
-   -- make api composable? Table.fuzz << table [] << validator (\a -> Just a) <| (\a b -> a |> Expect.equal b) or something similar
-   -- make api composable? table [] |> withValidator (\a -> Just a) |> fuzz int int "" (\a b -> a |> Expect.equal b) or something similar
-
-   -- what other things are useful fuzz test tools?
-
--}
 -- Fuzzers
 
 
