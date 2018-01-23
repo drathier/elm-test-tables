@@ -3,7 +3,6 @@ module Example exposing (..)
 import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer, float, int, list, string, tuple)
 import Fuzz.Table exposing (..)
-import Fuzz.Transform exposing (transform)
 import Test exposing (..)
 import Test.Table exposing (..)
 
@@ -55,17 +54,17 @@ positive =
     [ fuzz int "expect input to be positive" <|
         abs
           >> (\a -> a + 1 |> Expect.greaterThan 0)
-    , fuzz (tuple int int) "expect sum to be positive" <|
+    , fuzz (tuple (int, int)) "expect sum to be positive" <|
         (\( a, b ) -> ( abs a, abs b ))
           >> (\( a, b ) -> a + b |> Expect.greaterThan 0)
     , fuzz2 int int "expect sum to be positive" <|
-        \a b ->
+        \ai bi ->
           let
             a =
-              abs a
+              abs ai
 
             b =
-              abs b
+              abs bi
           in
           a + b |> Expect.greaterThan 0
     ]
