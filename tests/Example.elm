@@ -2,6 +2,7 @@ module Example exposing (..)
 
 import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer, float, int, list, string, tuple)
+import Fuzz.Opaque exposing (comparable, comparable2)
 import Fuzz.Table exposing (..)
 import Test exposing (..)
 import Test.Table exposing (..)
@@ -54,10 +55,10 @@ positive =
     [ fuzz int "expect input to be positive" <|
         abs
           >> (\a -> a + 1 |> Expect.greaterThan 0)
-    , fuzz (tuple (int, int)) "expect sum to be positive" <|
+    , fuzz (tuple ( int, int )) "expect sum to be positive" <|
         (\( a, b ) -> ( abs a, abs b ))
           >> (\( a, b ) -> a + b |> Expect.greaterThan 0)
-    , fuzz2 int int "expect sum to be positive" <|
+    , fuzz2 int int "expect sum to be positive using a let binding" <|
         \ai bi ->
           let
             a =
@@ -97,4 +98,20 @@ tableTests =
         ]
       <|
         \a b c -> (a * a) + (b * b) |> Expect.equal (c * c)
+    ]
+
+
+comparables =
+  describe "comparable fuzzers"
+    [ fuzz (list comparable) "comparable" <|
+        \l ->
+          let
+            _ =
+              List.sort l
+          in
+          Expect.true "Dummy test; this should compile" True
+
+    -- dummy test; this shouldn't compile, because all comparable have distinct types
+    -- , fuzz2 comparable comparable2 "adsf" <|
+    --     \a b -> a |> Expect.notEqual b
     ]

@@ -6,6 +6,8 @@ Elm-test tool that allows table-driven tests. Idiomatic or not, they're really n
 
 - table of fuzzers, to be run one by one, for testing comparable etc.
 - letter fuzzers for a,b,c,d,e,... for non-overlapping arbitrary types
+  - for when you need a value, but don't care what type it is.
+  - e.g. list reverse identity is a good example
 
 - table of unit test arguments, with a fuzzer as well
 - table of known edge cases that we don't care about handling
