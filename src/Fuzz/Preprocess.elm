@@ -2,9 +2,9 @@ module Fuzz.Transform exposing (..)
 
 import Expect
 
-{-| In order to transform inputs before they enter the fuzz function, it would be useful to have a function like this:
+{-| In order to preprocess inputs before they enter the fuzz function, it would be useful to have a function like this:
 
-    transform : (a -> a) -> (a -> Expect.Expectation) -> a -> Expect.Expectation
+    preprocess : (a -> a) -> (a -> Expect.Expectation) -> a -> Expect.Expectation
 
 Luckily, this exactly matches forward function composition:
 
@@ -37,7 +37,7 @@ Or, use a let-binding:
 
  -}
 
-transform : (a -> a) -> (a -> Expect.Expectation) -> a -> Expect.Expectation
-transform transformer test =
+preprocess : (a -> a) -> (a -> Expect.Expectation) -> a -> Expect.Expectation
+preprocess =
   (>>)
 
