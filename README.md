@@ -34,6 +34,11 @@ Elm-test tool that allows table-driven tests. Idiomatic or not, they're really n
   - What does this look like when combined with tables? Too busy? Fuzz, fuzzers, desc, table, transform/reject (transform/reject function is passed to fn as an argument, so we can print after all shrinking is done), and the fuzz body.
 
 - Every test case still tests one thing, even if it's a fuzz or table test.
+  - No it does not. Tables test many things. But so do fuzzers.
+    - Maybe we can reuse the fuzz body in unit tests in a nice way?
+  - Tables _may_ test many things, but should not!
 
 - what other things are useful fuzz test tools?
 - what other test tools are there?
+
+- expecting to find a counterexample, i.e. expecting a property to not hold in the general case

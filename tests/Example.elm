@@ -2,7 +2,7 @@ module Example exposing (..)
 
 import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer, float, int, list, string, tuple)
-import Fuzz.Opaque exposing (comparable, comparable2)
+import Fuzz.Opaque exposing (a, appendable, b, comparable, comparable2)
 import Fuzz.Table exposing (..)
 import Test exposing (..)
 import Test.Table exposing (..)
@@ -114,4 +114,20 @@ comparables =
     -- dummy test; this shouldn't compile, because all comparable have distinct types
     -- , fuzz2 comparable comparable2 "adsf" <|
     --     \a b -> a |> Expect.notEqual b
+    ]
+
+
+opaques =
+  describe "opaque fuzzers"
+    [ fuzz2 a b "always always returns the first argument" <|
+        \a b -> always a b |> Expect.equal a
+    , fuzz (list a) "reversing a list twice results in the original list" <|
+        \lst -> lst |> List.reverse |> List.reverse |> Expect.equal lst
+    ]
+
+
+appendables =
+  describe "appendable fuzzers"
+    [ fuzz3 appendable appendable appendable "append is associative" <|
+        \a b c -> ((a ++ b) ++ c) |> Expect.equal (a ++ (b ++ c))
     ]
