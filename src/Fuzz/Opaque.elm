@@ -41,7 +41,7 @@ comparable5 =
 
 
 
--- Appendable. Unfortunately, there are only two, but it's better than nothing.
+-- Appendables. Unfortunately, there are only two, but it's better than nothing.
 
 
 appendable : Fuzzer String

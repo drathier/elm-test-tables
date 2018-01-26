@@ -112,7 +112,7 @@ comparables =
           Expect.true "Dummy test; this should compile" True
 
     -- dummy test; this shouldn't compile, because all comparable have distinct types
-    -- , fuzz2 comparable comparable2 "adsf" <|
+    -- , fuzz2 comparable comparable2 "does not compile" <|
     --     \a b -> a |> Expect.notEqual b
     ]
 

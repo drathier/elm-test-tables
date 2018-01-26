@@ -42,3 +42,9 @@ Elm-test tool that allows table-driven tests. Idiomatic or not, they're really n
 - what other test tools are there?
 
 - expecting to find a counterexample, i.e. expecting a property to not hold in the general case
+
+- type classes!
+  - fuzzers for map, andMap, andThen etc.
+  - associativity, commutativity, idempotence, etc.
+  - idempotent, idempotent2, associative, commutative, etc
+    - no anti-properties for now. They're too uncommon.
