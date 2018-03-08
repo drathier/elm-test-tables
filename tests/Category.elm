@@ -4,8 +4,8 @@ import Array
 import Dict
 import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer, float, int, list, string, tuple)
-import Fuzz.Category
-import Fuzz.Opaque exposing (a, appendable, b, comparable, comparable2)
+import Fuzz.Category exposing (..)
+import Fuzz.Opaque exposing (a, appendable, b, comparable, comparable2, numberRange)
 import Fuzz.Roundtrip
 import Fuzz.Table exposing (..)
 import Set
@@ -15,22 +15,37 @@ import Test.Table exposing (..)
 
 functors =
   describe "Functor laws"
-    [ Fuzz.Category.functor "List" List.map Fuzz.list
-    , Fuzz.Category.functor "Array" Array.map Fuzz.array
-    , Fuzz.Category.functor "Maybe" Maybe.map Fuzz.maybe
-    , Fuzz.Category.functor "Result" Result.map (Fuzz.result (Fuzz.constant <| Err "no"))
-    , Fuzz.Category.functor "Set" Set.map (Fuzz.list >> Fuzz.map Set.fromList)
+    [ functor "List" List.map Fuzz.list
+    , functor "Array" Array.map Fuzz.array
+    , functor "Maybe" Maybe.map Fuzz.maybe
+    , functor "Result" Result.map (Fuzz.result (Fuzz.constant <| Err "no"))
+    , functor "Set" Set.map (Fuzz.list >> Fuzz.map Set.fromList)
     ]
 
 
-{-| If we can translate values between two types without losing information, it's an isomorphism.
-
-(`+3`, `-3`) is one example. (`Json.Encode.int`, `Json.Decode.int`) is another one, but (`toFloat`, `truncate`) isn't, because `truncate 2.0` and `truncate 2.1` both result in the same `Int`.
-
--}
-isomorphism : String -> Fuzzer a -> Fuzzer b -> (a -> b) -> (b -> a) -> Test
-isomorphism name fa fb ab ba =
-  describe ("isomorphism test for" ++ name)
-    [ Fuzz.Roundtrip.roundtrip name fa ab ba
-    , Fuzz.Roundtrip.roundtrip name fb ba ab
+roundtrips =
+  describe "roundtrip tests"
+    [ Fuzz.Roundtrip.roundtrip "toFloat/truncate" (Fuzz.intRange -11147 47111) toFloat truncate
+    , Fuzz.Roundtrip.roundtrip "+3 / -3" (Fuzz.intRange -11147 47111) ((+) 3) ((+) -3)
     ]
+
+
+isomorphisms =
+  describe "isomorphism tests"
+    [ -- failed: isomorphism "toFloat/truncate" (Fuzz.intRange -11147 47111) (Fuzz.floatRange -11147 47111) toFloat truncate
+      isomorphism "+3 / -3" (Fuzz.intRange -11147 47111) (Fuzz.intRange -11147 47111) ((+) 3) ((+) -3)
+
+    -- , isomorphism "exp / log 3" (numberRange 1 42) (numberRange 1 42) ((^) 3) (logBase 3)
+    -- , isomorphism "exp / log 6" (numberRange 1 42) (numberRange 1 42) ((^) 6) (logBase 6)
+    -- , isomorphism "exp / log 1.3" (numberRange 1 42) (numberRange 1 42) ((^) 1.3) (logBase 1.3)
+    ]
+
+
+
+-- -- homomorphism name afuzz fmap fold afolder ab bfolder =
+--
+--
+-- homomorphisms =
+--   describe "homomorphism tests"
+--     [ homomorphism "List.length" (Fuzz.list << Fuzz.list) List.map (List.foldl [])
+--     ]

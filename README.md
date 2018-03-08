@@ -48,3 +48,5 @@ Elm-test tool that allows table-driven tests. Idiomatic or not, they're really n
   - associativity, commutativity, idempotence, etc.
   - idempotent, idempotent2, associative, commutative, etc
     - no anti-properties for now. They're too uncommon.
+
+- test that things don't compile

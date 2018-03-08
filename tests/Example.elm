@@ -55,10 +55,10 @@ positive =
   describe "tests with positive numbers"
     [ fuzz int "expect input to be positive" <|
         abs
-          >> (\a -> a + 1 |> Expect.greaterThan 0)
+          >> (Expect.greaterThan -1)
     , fuzz (tuple ( int, int )) "expect sum to be positive" <|
         (\( a, b ) -> ( abs a, abs b ))
-          >> (\( a, b ) -> a + b |> Expect.greaterThan 0)
+          >> (\( a, b ) -> a + b |> Expect.greaterThan -1)
     , fuzz2 int int "expect sum to be positive using a let binding" <|
         \ai bi ->
           let
@@ -68,7 +68,7 @@ positive =
             b =
               abs bi
           in
-          a + b |> Expect.greaterThan 0
+          a + b |> Expect.greaterThan -1
     ]
 
 

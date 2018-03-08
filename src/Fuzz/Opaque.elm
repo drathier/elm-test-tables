@@ -3,7 +3,7 @@ module Fuzz.Opaque exposing (..)
 {-| Let's say you're testing a container, and you don't really care what you put into the list, as long as there are values, perhaps with a certain property. Why would you use a list of ints, when what you really want is a list of a, or a list of comparable?
 -}
 
-import Fuzz exposing (Fuzzer, bool, custom, float, int, list, map, string, tuple, tuple3, tuple4, tuple5, unit)
+import Fuzz exposing (Fuzzer, bool, custom, float, floatRange, int, intRange, list, map, string, tuple, tuple3, tuple4, tuple5, unit)
 import Random exposing (Generator)
 
 
@@ -66,14 +66,34 @@ opaque =
 -- Numbers. Unfortunately, there are only two, but it's better than nothing.
 
 
-number : Fuzzer Int
+number : Fuzzer Float
 number =
+  float
+
+
+number2 : Fuzzer Int
+number2 =
   int
 
 
-number2 : Fuzzer Float
-number2 =
-  float
+numberRange : number -> number -> Fuzzer Float
+numberRange low high =
+  floatRange (numToFloat low) (numToFloat high)
+
+
+numberRange2 : number -> number -> Fuzzer Int
+numberRange2 low high =
+  intRange (floor (numToFloat low)) (ceiling (numToFloat high))
+
+
+numToFloat : number -> Float
+numToFloat n =
+  case toString n |> String.toFloat of
+    Err _ ->
+      Debug.crash "toString and String.toFloat don't agree"
+
+    Ok f ->
+      f
 
 
 
