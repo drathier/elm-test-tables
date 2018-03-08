@@ -8,45 +8,46 @@ import Test exposing (..)
 import Test.Table exposing (..)
 
 
-suite : Test
-suite =
-  describe "flaky tests"
-    [ fuzz int "input is not equal to 4711" <|
-        \a -> a |> Expect.notEqual 4711
-    , fuzzTable3 int int int "inputs don't sum to 10" [ ( 35, 24, -49 ) ] <|
-        \a b c -> a + b + c |> Expect.notEqual 10
-    , fuzzTable int "input is not equal to 4711 with edge cases" [ 1, 3, 7, 6, 4711 ] <|
-        \a -> a |> Expect.notEqual 4711
-    , fuzzTable2
-        int
-        int
-        "Expect things to not be equal"
-        [ ( 0, 0 )
-        , ( 1, 2 )
-        , ( 3, 4 )
-        , ( 7, 8 )
-        , ( 9, 12 )
-        ]
-      <|
-        \a b -> a |> Expect.notEqual b
-    , fuzzTable2
-        int
-        string
-        "Expect string to not be numbers"
-        [--( 42, "42" )
-        ]
-      <|
-        \a b -> toString a |> Expect.notEqual b
 
-    -- , fuzzTableValidate2
-    --     int
-    --     int
-    --     "Expect average calculations to be equivalent (binary search bug)"
-    --     []
-    --     (\( a, b ) -> ( abs a, abs b ))
-    --   <|
-    --     \a b -> ((a + b) // 2) |> Expect.equal (min a b + ((max a b - min a b) // 2))
-    ]
+{- suite =
+   describe "flaky tests"
+     [ fuzz int "input is not equal to 4711" <|
+         \a -> a |> Expect.notEqual 4711
+     , fuzzTable3 int int int "inputs don't sum to 10" [ ( 35, 24, -49 ) ] <|
+         \a b c -> a + b + c |> Expect.notEqual 10
+     , fuzzTable int "input is not equal to 4711 with edge cases" [ 1, 3, 7, 6, 4711 ] <|
+         \a -> a |> Expect.notEqual 4711
+     , fuzzTable2
+         int
+         int
+         "Expect things to not be equal"
+         [ ( 0, 0 )
+         , ( 1, 2 )
+         , ( 3, 4 )
+         , ( 7, 8 )
+         , ( 9, 12 )
+         ]
+       <|
+         \a b -> a |> Expect.notEqual b
+     , fuzzTable2
+         int
+         string
+         "Expect string to not be numbers"
+         [--( 42, "42" )
+         ]
+       <|
+         \a b -> toString a |> Expect.notEqual b
+
+     -- , fuzzTableValidate2
+     --     int
+     --     int
+     --     "Expect average calculations to be equivalent (binary search bug)"
+     --     []
+     --     (\( a, b ) -> ( abs a, abs b ))
+     --   <|
+     --     \a b -> ((a + b) // 2) |> Expect.equal (min a b + ((max a b - min a b) // 2))
+     ]
+-}
 
 
 positive : Test

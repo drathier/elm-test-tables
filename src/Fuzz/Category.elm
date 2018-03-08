@@ -5,44 +5,21 @@ module Fuzz.Category exposing (..)
 
 import Expect
 import Fuzz exposing (Fuzzer)
-import Fuzz.Opaque exposing (a)
+import Fuzz.Opaque exposing (a, number)
 import Test exposing (Test, describe, fuzz)
 
 
-
--- Exported test suites
--- map :
---   ((a -> b) -> container -> container)
---   -> (a -> container)
---   -> String
---   -> Test
-
-
-map afuzz fmap return name =
+functor name fmap afuzz =
   describe ("test " ++ name ++ ".map")
-    [ fuzz afuzz "make sure `map identity == identity`" <|
-        \a -> return a |> fmap identity |> Expect.equal (return a |> identity)
+    [ fuzz (afuzz number) "make sure `map identity == identity`" <|
+        \a -> a |> fmap identity |> toString |> Expect.equal (a |> identity |> toString)
+    , fuzz (afuzz number) "make sure `map (f << g) == map f << map g`" <|
+        let
+          f a =
+            a + 14
 
-    -- , fuzz a "make sure `map (f << g) == map f << map g`" <|
-    --     \a -> a |> map (f << g) |> Expect.equal (a |> map f |> map g)
+          g a =
+            a + 12
+        in
+        \a -> a |> fmap (f << g) |> Expect.equal (a |> fmap f |> fmap g)
     ]
-
-
-
--- Helpers
-
-
-type A a
-  = A a
-
-
-type B b
-  = B b
-
-
-f a =
-  A a
-
-
-g a =
-  B a
