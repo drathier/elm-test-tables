@@ -1,4 +1,4 @@
-module Fuzz.Transform exposing (..)
+module Fuzz.Preprocess exposing (..)
 
 import Expect
 
