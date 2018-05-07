@@ -14,7 +14,7 @@ import Test exposing (Test, describe, fuzz)
 
 
 {-| Associativity is the property that `f (f a b) c = f a (f b c)` or `(a + b) + c = a + (b + c)`.
-Notable examples include `+`, `*` and `max`.
+Notable examples include `+`, `*` and `max`, but note that float operations generally aren't associative.
 -}
 associative : { r | f : a -> a -> a, a : a, b : a, c : a } -> Expect.Expectation
 associative { f, a, b, c } =
