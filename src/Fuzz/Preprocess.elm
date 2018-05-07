@@ -2,6 +2,7 @@ module Fuzz.Preprocess exposing (..)
 
 import Expect
 
+
 {-| In order to preprocess inputs before they enter the fuzz function, it would be useful to have a function like this:
 
     preprocess : (a -> a) -> (a -> Expect.Expectation) -> a -> Expect.Expectation
@@ -34,10 +35,7 @@ Or, use a let-binding:
             in
             a + b |> Expect.greaterThan 0
 
-
- -}
-
+-}
 preprocess : (a -> a) -> (a -> Expect.Expectation) -> a -> Expect.Expectation
 preprocess =
   (>>)
-

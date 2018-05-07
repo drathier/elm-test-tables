@@ -55,7 +55,7 @@ positive =
   describe "tests with positive numbers"
     [ fuzz int "expect input to be positive" <|
         abs
-          >> (Expect.greaterThan -1)
+          >> Expect.greaterThan -1
     , fuzz (tuple ( int, int )) "expect sum to be positive" <|
         (\( a, b ) -> ( abs a, abs b ))
           >> (\( a, b ) -> a + b |> Expect.greaterThan -1)
