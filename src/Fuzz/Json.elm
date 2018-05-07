@@ -2,8 +2,6 @@ module Fuzz.Json exposing (..)
 
 import Expect
 import Fuzz exposing (Fuzzer)
-import Fuzz.Category exposing (isomorphism)
-import Fuzz.Roundtrip
 import Json.Decode
 import Json.Encode
 import Test exposing (Test)

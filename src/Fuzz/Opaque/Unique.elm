@@ -28,14 +28,16 @@ Types match Fuzz.Opaque.number with same number.
 
 # Opaque
 
-Fuzzers that generate opaque types with no constraints, e.g. `Fuzzer a`. Note that `Fuzzer a` is a different type from `Fuzzer b` etc.
+Fuzzers that generate opaque types with no constraints, e.g. `Fuzzer a`.
+
+Note that `Fuzzer a` is a different type from `Fuzzer b` etc.
 
 @docs a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z
 
 -}
 
 import Fuzz exposing (Fuzzer, custom, floatRange, intRange, list, map, tuple, tuple3, tuple4, tuple5, unit)
-import Fuzz.Unique exposing (char, float, int, string)
+import Fuzz.Unique as Unique
 import Random exposing (Generator)
 
 
@@ -51,35 +53,35 @@ constant c =
 -}
 comparable : Fuzzer ( String, Int )
 comparable =
-  tuple ( constant "comparable", int )
+  tuple ( constant "uniqueComparable", Unique.int )
 
 
 {-| `Fuzzer comparable2`
 -}
 comparable2 : Fuzzer ( String, Int, String )
 comparable2 =
-  tuple3 ( constant "comparable2", int, constant "\x1F914" )
+  tuple3 ( constant "uniqueComparable2", Unique.int, constant "\x1F914" )
 
 
 {-| `Fuzzer comparable3`
 -}
 comparable3 : Fuzzer ( String, Int, Char )
 comparable3 =
-  tuple3 ( constant "comparable3", int, constant '\x1F917' )
+  tuple3 ( constant "uniqueComparable3", Unique.int, constant '\x1F917' )
 
 
 {-| `Fuzzer comparable4`
 -}
 comparable4 : Fuzzer ( String, Int, Float )
 comparable4 =
-  tuple3 ( constant "comparable4", int, constant pi )
+  tuple3 ( constant "uniqueComparable4", Unique.int, constant pi )
 
 
 {-| `Fuzzer comparable5`
 -}
 comparable5 : Fuzzer ( String, Int, Char, Char )
 comparable5 =
-  tuple4 ( constant "comparable5", int, constant '❤', constant '\x1F937' )
+  tuple4 ( constant "uniqueComparable5", Unique.int, constant '❤', constant '\x1F937' )
 
 
 
@@ -90,7 +92,7 @@ comparable5 =
 -}
 appendable : Fuzzer String
 appendable =
-  string
+  Unique.string
 
 
 {-| `Fuzzer appendable2`
@@ -105,7 +107,7 @@ type Opaque
 
 
 opaque =
-  map Opaque int
+  map Opaque Unique.int
 
 
 
@@ -116,14 +118,14 @@ opaque =
 -}
 number : Fuzzer Float
 number =
-  float
+  Unique.float
 
 
 {-| `Fuzzer number2`
 -}
 number2 : Fuzzer Int
 number2 =
-  int
+  Unique.int
 
 
 
@@ -138,7 +140,7 @@ type A
 -}
 a : Fuzzer A
 a =
-  map A int
+  map A Unique.int
 
 
 type B
@@ -149,7 +151,7 @@ type B
 -}
 b : Fuzzer B
 b =
-  map B int
+  map B Unique.int
 
 
 type C
@@ -160,7 +162,7 @@ type C
 -}
 c : Fuzzer C
 c =
-  map C int
+  map C Unique.int
 
 
 type D
@@ -171,7 +173,7 @@ type D
 -}
 d : Fuzzer D
 d =
-  map D int
+  map D Unique.int
 
 
 type E
@@ -182,7 +184,7 @@ type E
 -}
 e : Fuzzer E
 e =
-  map E int
+  map E Unique.int
 
 
 type F
@@ -193,7 +195,7 @@ type F
 -}
 f : Fuzzer F
 f =
-  map F int
+  map F Unique.int
 
 
 type G
@@ -204,7 +206,7 @@ type G
 -}
 g : Fuzzer G
 g =
-  map G int
+  map G Unique.int
 
 
 type H
@@ -215,7 +217,7 @@ type H
 -}
 h : Fuzzer H
 h =
-  map H int
+  map H Unique.int
 
 
 type I
@@ -226,7 +228,7 @@ type I
 -}
 i : Fuzzer I
 i =
-  map I int
+  map I Unique.int
 
 
 type J
@@ -237,7 +239,7 @@ type J
 -}
 j : Fuzzer J
 j =
-  map J int
+  map J Unique.int
 
 
 type K
@@ -248,7 +250,7 @@ type K
 -}
 k : Fuzzer K
 k =
-  map K int
+  map K Unique.int
 
 
 type L
@@ -259,7 +261,7 @@ type L
 -}
 l : Fuzzer L
 l =
-  map L int
+  map L Unique.int
 
 
 type M
@@ -270,7 +272,7 @@ type M
 -}
 m : Fuzzer M
 m =
-  map M int
+  map M Unique.int
 
 
 type N
@@ -281,7 +283,7 @@ type N
 -}
 n : Fuzzer N
 n =
-  map N int
+  map N Unique.int
 
 
 type O
@@ -292,7 +294,7 @@ type O
 -}
 o : Fuzzer O
 o =
-  map O int
+  map O Unique.int
 
 
 type P
@@ -303,7 +305,7 @@ type P
 -}
 p : Fuzzer P
 p =
-  map P int
+  map P Unique.int
 
 
 type Q
@@ -314,7 +316,7 @@ type Q
 -}
 q : Fuzzer Q
 q =
-  map Q int
+  map Q Unique.int
 
 
 type R
@@ -325,7 +327,7 @@ type R
 -}
 r : Fuzzer R
 r =
-  map R int
+  map R Unique.int
 
 
 type S
@@ -336,7 +338,7 @@ type S
 -}
 s : Fuzzer S
 s =
-  map S int
+  map S Unique.int
 
 
 type T
@@ -347,7 +349,7 @@ type T
 -}
 t : Fuzzer T
 t =
-  map T int
+  map T Unique.int
 
 
 type U
@@ -358,7 +360,7 @@ type U
 -}
 u : Fuzzer U
 u =
-  map U int
+  map U Unique.int
 
 
 type V
@@ -369,7 +371,7 @@ type V
 -}
 v : Fuzzer V
 v =
-  map V int
+  map V Unique.int
 
 
 type W
@@ -380,7 +382,7 @@ type W
 -}
 w : Fuzzer W
 w =
-  map W int
+  map W Unique.int
 
 
 type X
@@ -391,7 +393,7 @@ type X
 -}
 x : Fuzzer X
 x =
-  map X int
+  map X Unique.int
 
 
 type Y
@@ -402,7 +404,7 @@ type Y
 -}
 y : Fuzzer Y
 y =
-  map Y int
+  map Y Unique.int
 
 
 type Z
@@ -413,4 +415,4 @@ type Z
 -}
 z : Fuzzer Z
 z =
-  map Z int
+  map Z Unique.int

@@ -1,6 +1,6 @@
 module Fuzz.Unique exposing (char, float, int, string)
 
-{-| Fuzz.Unique contains fuzzers for built-in types but with a very low probability of ever generating two equal values. Perfect if you're filling up a `Set` from a `List` and want that `Set` to be the same size as the `List`, or you just want each value to be unique.
+{-| Fuzz.Unique contains fuzzers for built-in types, but with a very low probability of ever generating two equal values. Perfect if you're filling up a `Set comparable` from a `List comparable` and want that `Set` to be the same size as the `List`, or you just want each value to be unique.
 
 @docs int, float, string, char
 
@@ -17,7 +17,7 @@ import Test exposing (Test)
 
 -- Fuzzers
 
-
+{-| -}
 int =
   Fuzz.custom
     (Random.frequency
@@ -28,6 +28,7 @@ int =
     Shrink.int
 
 
+{-| -}
 float =
   let
     generator =
@@ -39,38 +40,40 @@ float =
   Fuzz.custom generator Shrink.float
 
 
+{-| -}
 string =
   let
     asciiGenerator : Generator String
     asciiGenerator =
       Random.int 100 1000
-        |> Random.andThen (lengthString asciiCharGenerator)
-
-    whitespaceGenerator : Generator String
-    whitespaceGenerator =
-      Random.int 100 1000
-        |> Random.andThen (lengthString whitespaceCharGenerator)
+        |> Random.andThen (lengthString charGenerator)
   in
-  Fuzz.custom
-    (Random.frequency
-      [ ( 9, asciiGenerator )
-      , ( 1, whitespaceGenerator )
-      ]
-    )
-    Shrink.string
+  Fuzz.custom asciiGenerator Shrink.string
 
 
+{-| Note: there are only ~113k possible unicode characters, so the collision rate of any two `Char` in a `list char` is actually pretty high. -}
 char =
-  Fuzz.custom asciiCharGenerator Shrink.character
+  Fuzz.custom charGenerator Shrink.character
 
 
 
 -- Helpers
 
 
-asciiCharGenerator : Generator Char
-asciiCharGenerator =
-  Random.map Char.fromCode (Random.int 32 0x0001F64F)
+charGenerator : Generator Char
+charGenerator =
+  (Random.int 32 0x0010FFFF
+    |> Random.map
+        (\v ->
+          if 0x00011000 <= v && v <= 0x0001FFFF then
+            -- skip invalid unicode code points; these are reserved for utf-18
+            v - (0x0001FFFF - 0x00011000)
+
+          else
+            v
+        )
+  )
+    |> Random.map Char.fromCode
 
 
 whitespaceCharGenerator : Generator Char
@@ -80,5 +83,5 @@ whitespaceCharGenerator =
 
 lengthString : Generator Char -> Int -> Generator String
 lengthString charGenerator stringLength =
-  Fuzz.list stringLength charGenerator
-    |> Fuzz.map String.fromList
+  Random.list stringLength charGenerator
+    |> Random.map String.fromList

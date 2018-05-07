@@ -1,5 +1,8 @@
 module Test.Table exposing (..)
 
+{-| `Test.Table` provides tools for writing table-driven tests. Only use `Test.Table` is you have a bunch of similar test cases that can all be reasonably described as a group. If you can, use `Fuzz.Table` instead.
+-}
+
 import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer, int)
 import Test exposing (Test)
