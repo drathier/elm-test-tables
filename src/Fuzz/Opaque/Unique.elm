@@ -1,4 +1,4 @@
-module Fuzz.Opaque.Unique exposing (a, appendable, appendable2, b, c, comparable, comparable2, comparable3, comparable4, comparable5, d, e, f, g, h, i, j, k, l, m, n, number, number2, o, p, q, r, s, t, u, v, w, x, y, z)
+module Fuzz.Opaque.Unique exposing (a, appendable, b, c, comparable, comparable2, comparable3, comparable4, comparable5, d, e, f, g, h, i, j, k, l, m, n, number, number2, o, p, q, r, s, t, u, v, w, x, y, z)
 
 {-| See docs for Fuzz.Opaque. This is a collection of those same fuzzers, but constructed in a way as to never give duplicate values. That is, if you generate a list of these values, there will be a very very low probability of a duplicate element in that list.
 
@@ -93,13 +93,6 @@ comparable5 =
 appendable : Fuzzer String
 appendable =
   Unique.string
-
-
-{-| `Fuzzer appendable2`
--}
-appendable2 : Fuzzer (List Opaque)
-appendable2 =
-  list opaque
 
 
 type Opaque
