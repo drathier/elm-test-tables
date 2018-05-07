@@ -5,7 +5,6 @@ import Fuzz exposing (Fuzzer, float, int, list, string, tuple)
 import Fuzz.Category exposing (..)
 import Fuzz.Json exposing (roundtrip)
 import Fuzz.Opaque exposing (a, appendable, b, comparable, comparable2, numberRange)
-import Fuzz.Roundtrip
 import Fuzz.Table exposing (..)
 import Json.Decode
 import Json.Encode
@@ -13,7 +12,7 @@ import Test exposing (..)
 import Test.Table exposing (..)
 
 
-roundtrips =
+roundtripTests =
   describe "json rountrip tests"
     [ roundtrip "int encode/decode" Fuzz.int Json.Encode.int Json.Decode.int
     ]
