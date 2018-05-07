@@ -1,4 +1,4 @@
-module Category exposing (..)
+module Fuzz.CategoryTest exposing (..)
 
 import Array
 import Dict
@@ -7,7 +7,6 @@ import Fuzz exposing (Fuzzer, float, int, list, string, tuple)
 import Fuzz.Category exposing (..)
 import Fuzz.Opaque exposing (a, appendable, b, comparable, comparable2, numberRange)
 import Fuzz.Roundtrip
-import Fuzz.Table exposing (..)
 import Set
 import Test exposing (..)
 import Test.Table exposing (..)
@@ -32,20 +31,5 @@ roundtrips =
 
 isomorphisms =
   describe "isomorphism tests"
-    [ -- failed: isomorphism "toFloat/truncate" (Fuzz.intRange -11147 47111) (Fuzz.floatRange -11147 47111) toFloat truncate
-      isomorphism "+3 / -3" (Fuzz.intRange -11147 47111) (Fuzz.intRange -11147 47111) ((+) 3) ((+) -3)
-
-    -- , isomorphism "exp / log 3" (numberRange 1 42) (numberRange 1 42) ((^) 3) (logBase 3)
-    -- , isomorphism "exp / log 6" (numberRange 1 42) (numberRange 1 42) ((^) 6) (logBase 6)
-    -- , isomorphism "exp / log 1.3" (numberRange 1 42) (numberRange 1 42) ((^) 1.3) (logBase 1.3)
+    [ isomorphism "+3 / -3" (Fuzz.intRange -11147 47111) (Fuzz.intRange -11147 47111) ((+) 3) ((+) -3)
     ]
-
-
-
--- -- homomorphism name afuzz fmap fold afolder ab bfolder =
---
---
--- homomorphisms =
---   describe "homomorphism tests"
---     [ homomorphism "List.length" (Fuzz.list << Fuzz.list) List.map (List.foldl [])
---     ]

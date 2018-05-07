@@ -1,6 +1,6 @@
 module Fuzz.Roundtrip exposing (..)
 
-{-| Fuzz.Roundtrip provides fuzz tests for roundtrip tests, such as encoding and decoding Json.
+{-| Fuzz.Roundtrip provides a fuzz helper for roundtrip tests, such as encoding and decoding Json.
 -}
 
 import Expect

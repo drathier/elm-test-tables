@@ -1,4 +1,12 @@
-module Fuzz.Table exposing (..)
+module Fuzz.Table exposing (fuzzTable, fuzzTable2, fuzzTable3, fuzzTable4, fuzzTable5)
+
+{-| Fuzz.Table allows you to run fuzzers with known edge-cases. It'll run a fuzzer just like normal, but in addition, you can give it a list of inputs to try first.
+
+If you ever find a bug with a fuzz test, add the input to the list to make sure you never get a regression for that bug!
+
+@docs fuzzTable, fuzzTable2, fuzzTable3, fuzzTable4, fuzzTable5
+
+-}
 
 import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer, int)
@@ -128,7 +136,7 @@ edgeDesc index args =
     tupleString =
       toString args
   in
-  if String.length tupleString < 40 then
+  if String.length tupleString < 200 then
     "edge case " ++ toString index ++ ": " ++ tupleString
 
   else

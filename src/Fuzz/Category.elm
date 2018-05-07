@@ -10,17 +10,29 @@ import Fuzz.Roundtrip
 import Test exposing (Test, describe, fuzz)
 
 
+
+-- Semi-opaque types for use in functor tests. These types have to be comparable, appendable etc. so we cannot define our own unexported type, which would've made this completely opaque.
+
+
+type alias Opaque a =
+  ( String, a )
+
+
+opaque a =
+  ( "opaque-ish", a )
+
+
 functor name fmap afuzz =
   describe ("test " ++ name ++ ".map")
-    [ fuzz (afuzz number) "make sure `map identity == identity`" <|
+    [ fuzz (afuzz (number |> Fuzz.map opaque)) "make sure `map identity == identity`" <|
         \a -> a |> fmap identity |> toString |> Expect.equal (a |> identity |> toString)
-    , fuzz (afuzz number) "make sure `map (f << g) == map f << map g`" <|
+    , fuzz (afuzz (number |> Fuzz.map opaque)) "make sure `map (f << g) == map f << map g`" <|
         let
-          f a =
-            a + 14
+          f ( _, a ) =
+            opaque (a + 14)
 
-          g a =
-            a + 12
+          g ( _, a ) =
+            opaque (a + 12)
         in
         \a -> a |> fmap (f << g) |> Expect.equal (a |> fmap f |> fmap g)
     ]
@@ -37,20 +49,3 @@ isomorphism name fa fb ab ba =
     [ Fuzz.Roundtrip.roundtrip ("isomorphism " ++ name ++ " (1/2)") fa ab ba
     , Fuzz.Roundtrip.roundtrip ("isomorphism " ++ name ++ " (2/2)") fb ba ab
     ]
-
-
-{-| Homomorphism `f` for binary operators `*`: `f(a * b) = f(a) * f(b)` for every `a`, `b` and `*`.
-
-(`toFloat`, `+`, `+`) maps `Int -> Float`.
-(`List.length`, `+`, `++`) maps `List a -> Int`.
-
--}
-
-
-
--- homomorphism : String -> (t -> Fuzzer a) -> (fa -> fb) -> (a -> a -> a) -> (a -> b) -> (b -> b -> b) -> Test
-
-
-homomorphism name afuzz fmap fold afolder ab bfolder =
-  fuzz (afuzz a) ("homomorphism test for " ++ name) <|
-    \fa -> fa |> fold afolder |> fmap ab |> Expect.equal (fa |> fmap ab |> fold bfolder)

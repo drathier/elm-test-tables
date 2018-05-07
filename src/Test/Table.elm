@@ -9,7 +9,7 @@ import Test exposing (Test)
 -- Table tests
 
 
-{-| Test a list of inputs. Please use fuzzTable instead if you can.
+{-| Test a list of inputs. Please use Fuzz.Table.fuzzTable instead if you can.
 -}
 testTable :
   String
@@ -27,7 +27,7 @@ testTable description edgeCases getExpectation =
       edgeCases
 
 
-{-| Test a list of inputs. Please use fuzzTable2 instead if you can.
+{-| Test a list of inputs. Please use Fuzz.Table.fuzzTable2 instead if you can.
 -}
 testTable2 :
   String
@@ -45,7 +45,7 @@ testTable2 description edgeCases getExpectation =
       edgeCases
 
 
-{-| Test a list of inputs. Please use fuzzTable3 instead if you can.
+{-| Test a list of inputs. Please use Fuzz.Table.fuzzTable3 instead if you can.
 -}
 testTable3 :
   String
@@ -63,7 +63,7 @@ testTable3 description edgeCases getExpectation =
       edgeCases
 
 
-{-| Test a list of inputs. Please use fuzzTable4 instead if you can.
+{-| Test a list of inputs. Please use Fuzz.Table.fuzzTable4 instead if you can.
 -}
 testTable4 :
   String
@@ -81,7 +81,7 @@ testTable4 description edgeCases getExpectation =
       edgeCases
 
 
-{-| Test a list of inputs. Please use fuzzTable5 instead if you can.
+{-| Test a list of inputs. Please use Fuzz.Table.fuzzTable5 instead if you can.
 -}
 testTable5 :
   String
@@ -108,7 +108,7 @@ tableRowDesc index args =
     tupleString =
       toString args
   in
-  if String.length tupleString < 40 then
+  if String.length tupleString < 200 then
     "table test row " ++ toString index ++ ": " ++ tupleString
 
   else
