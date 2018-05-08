@@ -32,6 +32,8 @@ Or, use a let-binding:
             in
             a + b |> Expect.greaterThan 0
 
+@docs preprocess
+
 -}
 
 import Expect

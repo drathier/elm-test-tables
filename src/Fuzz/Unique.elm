@@ -17,7 +17,9 @@ import Test exposing (Test)
 
 -- Fuzzers
 
+
 {-| -}
+int : Fuzzer Int
 int =
   Fuzz.custom
     (Random.frequency
@@ -29,6 +31,7 @@ int =
 
 
 {-| -}
+float : Fuzzer Float
 float =
   let
     generator =
@@ -41,6 +44,7 @@ float =
 
 
 {-| -}
+string : Fuzzer String
 string =
   let
     asciiGenerator : Generator String
@@ -51,7 +55,9 @@ string =
   Fuzz.custom asciiGenerator Shrink.string
 
 
-{-| Note: there are only ~113k possible unicode characters, so the collision rate of any two `Char` in a `list char` is actually pretty high. -}
+{-| Note: there are only ~113k possible unicode characters, so the collision rate of any two `Char` in a `list char` is actually pretty high.
+-}
+char : Fuzzer Char
 char =
   Fuzz.custom charGenerator Shrink.character
 
