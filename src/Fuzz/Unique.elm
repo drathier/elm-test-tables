@@ -55,7 +55,7 @@ string =
   Fuzz.custom asciiGenerator Shrink.string
 
 
-{-| Note: there are only ~113k possible unicode characters, so the collision rate of any two `Char` in a `list char` is actually pretty high.
+{-| Note: there are only ~113k possible unicode characters, so the probability of at least one duplicate `Char` in a `list char` is actually pretty high.
 -}
 char : Fuzzer Char
 char =

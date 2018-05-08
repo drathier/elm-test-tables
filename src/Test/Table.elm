@@ -1,9 +1,9 @@
 module Test.Table exposing (testTable, testTable2, testTable3, testTable4, testTable5)
 
-{-| `Test.Table` provides tools for writing table-driven tests. Only use `Test.Table` is you have a bunch of similar test cases that can all be reasonably described as a group. If you can, use `Fuzz.Table` instead.
-
+{-| `Test.Table` provides tools for writing table-driven tests. Only use `Test.Table` if you have a bunch of similar test cases that can all be reasonably described as a group. If you can, use `Fuzz.Table` instead.
 
 @docs testTable, testTable2, testTable3, testTable4, testTable5
+
 -}
 
 import Expect exposing (Expectation)
@@ -15,7 +15,7 @@ import Test exposing (Test)
 -- Table tests
 
 
-{-| Test a list of inputs. Please use Fuzz.Table.fuzzTable instead if you can.
+{-| Test a list of inputs. Please use `Fuzz.Table.fuzzTable` instead if you can.
 -}
 testTable :
   String
@@ -33,7 +33,7 @@ testTable description edgeCases getExpectation =
       edgeCases
 
 
-{-| Test a list of inputs. Please use Fuzz.Table.fuzzTable2 instead if you can.
+{-| Test a list of inputs. Please use `Fuzz.Table.fuzzTable2` instead if you can.
 -}
 testTable2 :
   String
@@ -51,7 +51,7 @@ testTable2 description edgeCases getExpectation =
       edgeCases
 
 
-{-| Test a list of inputs. Please use Fuzz.Table.fuzzTable3 instead if you can.
+{-| Test a list of inputs. Please use `Fuzz.Table.fuzzTable3` instead if you can.
 -}
 testTable3 :
   String
@@ -69,7 +69,7 @@ testTable3 description edgeCases getExpectation =
       edgeCases
 
 
-{-| Test a list of inputs. Please use Fuzz.Table.fuzzTable4 instead if you can.
+{-| Test a list of inputs. Please use `Fuzz.Table.fuzzTable4` instead if you can.
 -}
 testTable4 :
   String
@@ -87,7 +87,7 @@ testTable4 description edgeCases getExpectation =
       edgeCases
 
 
-{-| Test a list of inputs. Please use Fuzz.Table.fuzzTable5 instead if you can.
+{-| Test a list of inputs. Please use `Fuzz.Table.fuzzTable5` instead if you can.
 -}
 testTable5 :
   String

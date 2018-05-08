@@ -36,7 +36,8 @@ test =
         ]
     , describe "min/max"
         [ fuzz3 number number number "max" <|
-            \a b c -> { f = max, a = a, b = b, c = c } |> Expect.all [ zeroElement (1 / 0), identityElement (-1 / 0), associative, commutative, idempotent ]
+            \a b c -> { f = max, a = a, b = b, c = c }
+            |> Expect.all [ zeroElement (1 / 0), identityElement (-1 / 0), associative, commutative, idempotent ]
         , fuzz3 number number number "min" <|
             \a b c -> { f = min, a = a, b = b, c = c } |> Expect.all [ zeroElement (-1 / 0), identityElement (1 / 0), associative, commutative, idempotent ]
         ]

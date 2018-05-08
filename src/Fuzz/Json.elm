@@ -1,6 +1,6 @@
 module Fuzz.Json exposing (..)
 
-{-| Fuzz.Json lets you test your json encoders / decoders.
+{-| Fuzz.Json lets you test your json encoders and decoders.
 
 @docs roundtrip
 -}
