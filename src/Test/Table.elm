@@ -112,7 +112,7 @@ tableRowDesc index args =
       toString args
   in
   if String.length tupleString < 200 then
-    "table test row " ++ toString index ++ ": " ++ tupleString
+    "table test row #" ++ toString (index + 1) ++ ": " ++ tupleString
 
   else
-    "table test row " ++ toString index
+    "table test row #" ++ toString (index + 1)

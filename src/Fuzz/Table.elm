@@ -137,7 +137,7 @@ edgeDesc index args =
       toString args
   in
   if String.length tupleString < 200 then
-    "edge case " ++ toString index ++ ": " ++ tupleString
+    "edge case #" ++ toString (index + 1) ++ ": " ++ tupleString
 
   else
-    "edge case " ++ toString index
+    "edge case #" ++ toString (index + 1)
