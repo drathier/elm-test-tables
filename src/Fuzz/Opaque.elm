@@ -1,6 +1,6 @@
-module Fuzz.Opaque exposing (..)
+module Fuzz.Opaque exposing (a, appendable, appendable2, b, c, comparable, comparable2, comparable3, comparable4, comparable5, d, e, f, g, h, i, j, k, l, m, n, number, number2, o, p, q, r, s, t, u, v, w, x, y, z, numberRange, numberRange2)
 
-{-| Let's say you're testing a container, and you don't really care what you put into the list, as long as there are values, perhaps with a certain property. Why would you use a list of ints, when what you really want is a list of a, or a list of comparable?
+{-| Let's say you're testing a container, and you don't really care what you put into the list, as long as there are values, perhaps with a certain property. Why would you use a list of `int`s, when what you really want is a list of `a`, or a list of `comparable`?
 -}
 
 import Fuzz exposing (Fuzzer, bool, custom, float, floatRange, int, intRange, list, map, string, tuple, tuple3, tuple4, tuple5, unit)
