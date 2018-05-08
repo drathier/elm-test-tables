@@ -1,6 +1,9 @@
-module Test.Table exposing (..)
+module Test.Table exposing (testTable, testTable2, testTable3, testTable4, testTable5)
 
 {-| `Test.Table` provides tools for writing table-driven tests. Only use `Test.Table` is you have a bunch of similar test cases that can all be reasonably described as a group. If you can, use `Fuzz.Table` instead.
+
+
+@docs testTable, testTable2, testTable3, testTable4, testTable5
 -}
 
 import Expect exposing (Expectation)

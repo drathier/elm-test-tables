@@ -1,6 +1,9 @@
-module Fuzz.Category exposing (..)
+module Fuzz.Category exposing (fn, map)
 
-{-| Fuzz.Category provides fuzz tests for common functions, like `map`, `andMap` and `andThen`.
+{-| Fuzz.Category provides fuzz tests for common functions, like `map`.
+
+@docs map
+
 -}
 
 import Expect
@@ -21,6 +24,7 @@ opaque a =
   ( "opaque-ish", a )
 
 
+map : String -> ((a -> b) -> a -> b) -> (a -> Fuzzer a) -- TODO: what's this supposed to be?
 map name fmap afuzz =
   describe ("test " ++ name ++ ".map")
     [ fuzz (afuzz (number |> Fuzz.map opaque)) "make sure `map identity == identity`" <|
@@ -35,3 +39,11 @@ map name fmap afuzz =
         in
         \a -> a |> fmap (f << g) |> Expect.equal (a |> fmap f |> fmap g)
     ]
+
+
+
+-- TODO: `andMap` and `andThen`
+
+
+fn a =
+  2 * a

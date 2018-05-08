@@ -1,9 +1,13 @@
-module Expect.Category exposing (..)
+module Expect.Category exposing (associative, commutative, idempotent, identityElement, zeroElement)
 
 {-| Expect.Category provides expectations for common properties of binary functions, like (a+b)+c = a+(b+c) and (a+b) = (b+a):
 
     fuzz3 int int int "+" <|
         \a b c -> { f = (+), a = a, b = b, c = c } |> Expect.all [ associative, commutative ]
+
+These mathematical properties are actually quite useful, so try to grab a few of them for whatever data type you're building.
+
+@docs associative, commutative, idempotent, identityElement, zeroElement
 
 -}
 
