@@ -62,7 +62,7 @@ zeroElement zero { f, a } =
 
 
 
--- TODO: take an ext record as arg, so we can use Expect.all with these
+-- type check helpers; this should at least type check
 
 
 all : { r | b : a, c : a, a : a, f : a -> a -> a } -> Expectation

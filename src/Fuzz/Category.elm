@@ -78,8 +78,6 @@ mapv3 fmap afuzz =
 -- Left identity: return a >>= f ≡ f a
 -- Right identity:	m >>= return ≡ m
 -- Associativity: (m >>= f) >>= g ≡	m >>= (\x -> f x >>= g)
--- TODO: `andMap` and `andThen`
--- andThen
 -- TODO: do we have a more Elm-like name for the `m` monad below?
 
 
