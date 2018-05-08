@@ -16,7 +16,7 @@ Types match Fuzz.Opaque.comparable with same number.
 
 Types match Fuzz.Opaque.appendable with same number.
 
-@docs appendable, appendable2
+@docs appendable
 
 
 # Number

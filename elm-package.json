@@ -2,7 +2,7 @@
     "version": "4.0.0",
     "summary": "Elm-test with table-driven tests. Your primary defence against regressions.",
     "repository": "https://github.com/drathier/elm-test-tables.git",
-    "license": "MIT",
+    "license": "BSD-3-Clause",
     "source-directories": [
         "src"
     ],
