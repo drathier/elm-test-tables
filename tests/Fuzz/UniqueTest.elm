@@ -5,7 +5,7 @@ import Dict
 import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer, list, tuple5)
 import Fuzz.Category exposing (..)
-import Fuzz.Opaque exposing (a, appendable, b, comparable, comparable2, numberRange)
+import Fuzz.Opaque.Unique exposing (a, appendable, b, comparable)
 import Fuzz.Unique exposing (char, float, int, string)
 import Set
 import Test exposing (..)
@@ -14,6 +14,9 @@ import Test.Table exposing (..)
 
 testInt =
   fuzz (list int) "list of unique int" <| \v -> v |> Set.fromList |> Set.size |> Expect.equal (List.length v)
+
+testComparable =
+  fuzz (list comparable) "list of unique comparable" <| \v -> v |> Set.fromList |> Set.size |> Expect.equal (List.length v)
 
 
 testFloat =
