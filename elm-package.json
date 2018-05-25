@@ -1,5 +1,5 @@
 {
-    "version": "4.0.0",
+    "version": "1.0.0",
     "summary": "Elm-test with table-driven tests. Your primary defence against regressions.",
     "repository": "https://github.com/drathier/elm-test-tables.git",
     "license": "BSD-3-Clause",
