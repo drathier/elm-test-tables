@@ -2,7 +2,19 @@ module Fuzz.Table exposing (fuzzTable, fuzzTable2, fuzzTable3, fuzzTable4, fuzzT
 
 {-| Fuzz.Table allows you to run fuzzers with known edge-cases. It'll run a fuzzer just like normal, but in addition, you can give it a list of inputs to try first.
 
-If you ever find a bug with a fuzz test, add the input to the list to make sure you never get a regression for that bug!
+Next time you have a test that only fails once in a blue moon, like this one:
+
+    fuzz int "input is not equal to 11147" <|
+        \a -> a |> Expect.notEqual 11147
+
+you can replace it with a `fuzzTable` and add that edge case, so that elm-test will try that edge case on each test run from now on:
+
+    fuzzTable int "input is not equal to 11147" [ 11147 ] <|
+        \a -> a |> Expect.notEqual 11147
+
+Then that particular bug will never make it through your tests again!
+
+#FuzzTable
 
 @docs fuzzTable, fuzzTable2, fuzzTable3, fuzzTable4, fuzzTable5
 

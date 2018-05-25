@@ -20,6 +20,7 @@ suite =
         , fuzz2 int string "Expect string to not be numbers" <|
             \a b -> toString a |> Expect.notEqual b
         ]
+
     -- don't run the failing tests in normal operation; wait for elm-test to expose an expectToFail function
     -- , describe "those same tests, but now with explicit edge-cases"
     --     [ fuzzTable3 int int int "inputs don't sum to 4711" [ ( 4000, 700, 11 ) ] <|
@@ -37,8 +38,7 @@ suite =
     --         , ( 0, 7, 8 )
     --         , ( 0, 9, 12 )
     --         ]
-    --       <|
-    --         \a b c -> [ a, b, c ] |> Expect.notEqual [ b, c, a ]
+    --         (\a b c -> [ a, b, c ] |> Expect.notEqual [ b, c, a ])
     --     , fuzzTable2 int string "Expect string to not be numbers" [ ( 42, "42" ) ] <|
     --         \a b -> toString a |> Expect.notEqual b
     --     ]
@@ -92,8 +92,7 @@ tableTests =
         , ( 27, 36, 45 )
         , ( 30, 40, 50 )
         ]
-      <|
-        \a b c -> (a * a) + (b * b) |> Expect.equal (c * c)
+        (\a b c -> (a * a) + (b * b) |> Expect.equal (c * c))
     ]
 
 

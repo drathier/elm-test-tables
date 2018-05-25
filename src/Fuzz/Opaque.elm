@@ -1,10 +1,12 @@
 module Fuzz.Opaque exposing (a, appendable, appendable2, b, c, comparable, comparable2, comparable3, comparable4, comparable5, d, e, f, g, h, i, j, k, l, m, n, number, number2, numberRange, numberRange2, o, p, q, r, s, t, u, v, w, x, y, z)
 
-{-| Let's say you're testing a `List`, and you don't really care what you put into the list, as long as there are values, perhaps with a certain property. Why would you use a list of `int`s, when what you really want is a list of `a`, or a list of `comparable`? That's where this module fits in.
+{-| Let's say you're testing a `List`, and you don't really care what you put into the list, as long as there are values, perhaps with a certain property.
+
+Why would you use a list of `int`, when what you really want is a list of `a`, or a list of `comparable`? That's where this module fits in.
 
 Also see docs for `Fuzz.Opaque.Unique`. That's a collection of these same fuzzers, but constructed in a way as to never give duplicate values. That is, if you generate a list of those values, there will be a very very low probability of a duplicate element in that list.
 
-Types match Fuzz.Opaque.Unique with same name. Collision risk between `Fuzz.Opaque.a` and `Fuzz.Opaque.Unique.a` is very very low.
+Types match `Fuzz.Opaque.Unique` with same name. Collision risk between `Fuzz.Opaque.a` and `Fuzz.Opaque.Unique.a` is very very low.
 
 
 # Comparable
@@ -34,7 +36,7 @@ Types match `Fuzz.Opaque.Unique.number` with same number.
 
 # Opaque
 
-Fuzzers that generate opaque types with no constraints, e.g. `Fuzzer a`. Single-letter types aren't exported, so you cannot express `Fuzzer A` in your code; `Fuzzer a` is your only option.
+Fuzzers that generate opaque types with no constraints, e.g. `Fuzzer a`. Their types aren't exposed, so you cannot create an `A` in your code; `Fuzzer a` is your only option.
 
 Note that `Fuzzer a` is a different type from `Fuzzer b` etc.
 

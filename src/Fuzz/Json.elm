@@ -2,6 +2,15 @@ module Fuzz.Json exposing (..)
 
 {-| Fuzz.Json lets you test your json encoders and decoders.
 
+    roundtripTests =
+      describe "json roundtrip tests"
+        [ roundtrip "int encode/decode" Fuzz.int Json.Encode.int Json.Decode.int
+        , roundtrip "float encode/decode" Fuzz.float Json.Encode.float Json.Decode.float
+        , roundtrip "string encode/decode" Fuzz.string Json.Encode.string Json.Decode.string
+        , roundtrip "bool encode/decode" Fuzz.bool Json.Encode.bool Json.Decode.bool
+        ]
+
+
 @docs roundtrip
 -}
 

@@ -2,7 +2,7 @@ module Fuzz.Category exposing (andThenv1, andThenv2, andThenv3, mapv1, mapv2, ma
 
 {-| Fuzz.Category provides fuzz tests for common functions, like `map` and `andThen`.
 
-Many Elm data structures share some similar functions. I'm sure you've noticed `map` and `andMap`. There's `List.map`, `Set.map`, `Maybe.map` and so on. Since this is a very common patterns in Elm, you should provide them for your own data structures, and use the functions in this module to make sure they behave as expected.
+Many Elm data structures share some similar functions. I'm sure you've noticed `map` and `andThen`. There's `List.map`, `Set.map`, `Maybe.map` and so on. Since this is a very common pattern in Elm, you should provide them wherever they make sense for your own data structures, and use the functions in this module to make sure they behave as expected.
 
 
 # Map

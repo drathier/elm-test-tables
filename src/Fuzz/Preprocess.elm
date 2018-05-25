@@ -1,12 +1,16 @@
-module Fuzz.Preprocess exposing (..)
+module Fuzz.Preprocess exposing (preprocess)
 
-{-| In order to preprocess inputs before they enter the fuzz function, it would be useful to have a function like this:
+{-| Sometimes you want positive integers, or strings that don't contain spaces, or some other thing that's slightly different from the normal fuzzers. It would be really nice if we could preprocess them, with e.g. `abs`, or `String.filter (\c -> c /= ' ')`, or some other function.
+
+In order to preprocess inputs before they enter the fuzz function, it would be useful to have a function like this:
 
     preprocess : (a -> a) -> (a -> Expect.Expectation) -> a -> Expect.Expectation
 
 Luckily, this exactly matches forward function composition:
 
     (>>) : (a -> b) -> (b -> c) -> a -> c
+    -- in this case, a is the same type as b:
+         : (a -> a) -> (a -> c) -> a -> c
 
 So use that instead, like this:
 
@@ -37,7 +41,6 @@ Or, use a let-binding:
 -}
 
 import Expect
-
 
 {-| -}
 preprocess : (a -> a) -> (a -> Expect.Expectation) -> a -> Expect.Expectation

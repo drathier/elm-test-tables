@@ -28,7 +28,7 @@ Types match `Fuzz.Opaque.number` with same number.
 
 # Opaque
 
-Fuzzers that generate opaque types with no constraints, e.g. `Fuzzer a`. Single-letter types aren't exported, so you cannot express `Fuzzer A` in your code; `Fuzzer a` is your only option.
+Fuzzers that generate opaque types with no constraints, e.g. `Fuzzer a`. Their types aren't exposed, so you cannot create an `A` in your code; `Fuzzer a` is your only option.
 
 Note that `Fuzzer a` is a different type from `Fuzzer b` etc.
 
