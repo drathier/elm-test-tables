@@ -1,4 +1,4 @@
-module Test.Table exposing (testTable, testTable2, testTable3, testTable4, testTable5)
+module Test.Table exposing (testTable, testTable2, testTable3)
 
 {-| `Test.Table` provides tools for writing table-driven tests. Only use `Test.Table` if you have a bunch of similar test cases that can all be reasonably described as a group. If you can, use `Fuzz.Table` instead.
 
@@ -29,11 +29,12 @@ module Test.Table exposing (testTable, testTable2, testTable3, testTable4, testT
 
 #TestTable
 
-@docs testTable, testTable2, testTable3, testTable4, testTable5
+@docs testTable, testTable2, testTable3
 
 -}
 
 import Expect exposing (Expectation)
+import Formatting
 import Fuzz exposing (Fuzzer, int)
 import Test exposing (Test)
 
@@ -45,104 +46,60 @@ import Test exposing (Test)
 {-| Test a list of inputs. Please use `Fuzz.Table.fuzzTable` instead if you can.
 -}
 testTable :
-  String
-  -> List a
-  -> (a -> Expectation)
-  -> Test
+    String
+    -> List a
+    -> (a -> Expectation)
+    -> Test
 testTable description edgeCases getExpectation =
-  Test.describe description <|
-    List.indexedMap
-      (\index input ->
-        Test.test
-          (tableRowDesc index input)
-          (\() -> getExpectation input)
-      )
-      edgeCases
+    Test.describe description <|
+        List.indexedMap
+            (\index input ->
+                Test.test
+                    (tableRowDesc index)
+                    (\() -> getExpectation input)
+            )
+            edgeCases
 
 
 {-| Test a list of inputs. Please use `Fuzz.Table.fuzzTable2` instead if you can.
 -}
 testTable2 :
-  String
-  -> List ( a, b )
-  -> (a -> b -> Expectation)
-  -> Test
+    String
+    -> List ( a, b )
+    -> (a -> b -> Expectation)
+    -> Test
 testTable2 description edgeCases getExpectation =
-  Test.describe description <|
-    List.indexedMap
-      (\index ( a, b ) ->
-        Test.test
-          (tableRowDesc index ( a, b ))
-          (\() -> getExpectation a b)
-      )
-      edgeCases
+    Test.describe description <|
+        List.indexedMap
+            (\index ( a, b ) ->
+                Test.test
+                    (tableRowDesc index)
+                    (\() -> getExpectation a b)
+            )
+            edgeCases
 
 
 {-| Test a list of inputs. Please use `Fuzz.Table.fuzzTable3` instead if you can.
 -}
 testTable3 :
-  String
-  -> List ( a, b, c )
-  -> (a -> b -> c -> Expectation)
-  -> Test
+    String
+    -> List ( a, b, c )
+    -> (a -> b -> c -> Expectation)
+    -> Test
 testTable3 description edgeCases getExpectation =
-  Test.describe description <|
-    List.indexedMap
-      (\index ( a, b, c ) ->
-        Test.test
-          (tableRowDesc index ( a, b, c ))
-          (\() -> getExpectation a b c)
-      )
-      edgeCases
-
-
-{-| Test a list of inputs. Please use `Fuzz.Table.fuzzTable4` instead if you can.
--}
-testTable4 :
-  String
-  -> List ( a, b, c, d )
-  -> (a -> b -> c -> d -> Expectation)
-  -> Test
-testTable4 description edgeCases getExpectation =
-  Test.describe description <|
-    List.indexedMap
-      (\index ( a, b, c, d ) ->
-        Test.test
-          (tableRowDesc index ( a, b, c, d ))
-          (\() -> getExpectation a b c d)
-      )
-      edgeCases
-
-
-{-| Test a list of inputs. Please use `Fuzz.Table.fuzzTable5` instead if you can.
--}
-testTable5 :
-  String
-  -> List ( a, b, c, d, e )
-  -> (a -> b -> c -> d -> e -> Expectation)
-  -> Test
-testTable5 description edgeCases getExpectation =
-  Test.describe description <|
-    List.indexedMap
-      (\index ( a, b, c, d, e ) ->
-        Test.test
-          (tableRowDesc index ( a, b, c, d, e ))
-          (\() -> getExpectation a b c d e)
-      )
-      edgeCases
+    Test.describe description <|
+        List.indexedMap
+            (\index ( a, b, c ) ->
+                Test.test
+                    (tableRowDesc index)
+                    (\() -> getExpectation a b c)
+            )
+            edgeCases
 
 
 
 -- helpers
 
 
-tableRowDesc index args =
-  let
-    tupleString =
-      toString args
-  in
-  if String.length tupleString < 200 then
-    "table test row #" ++ toString (index + 1) ++ ": " ++ tupleString
-
-  else
-    "table test row #" ++ toString (index + 1)
+tableRowDesc index =
+    String.fromInt (index + 1) ++ Formatting.ordinalIndicator (index + 1) ++ " table test row"

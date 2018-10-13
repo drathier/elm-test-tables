@@ -1,4 +1,8 @@
-module Fuzz.Opaque exposing (a, appendable, appendable2, b, c, comparable, comparable2, comparable3, comparable4, comparable5, d, e, f, g, h, i, j, k, l, m, n, number, number2, numberRange, numberRange2, o, p, q, r, s, t, u, v, w, x, y, z)
+module Fuzz.Opaque exposing
+    ( comparable, comparable2, comparable3
+    , appendable, appendable2
+    , a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z
+    )
 
 {-| Let's say you're testing a `List`, and you don't really care what you put into the list, as long as there are values, perhaps with a certain property.
 
@@ -13,7 +17,7 @@ Types match `Fuzz.Opaque.Unique` with same name. Collision risk between `Fuzz.Op
 
 Types match `Fuzz.Opaque.Unique.comparable` with same number.
 
-@docs comparable, comparable2, comparable3, comparable4, comparable5
+@docs comparable, comparable2, comparable3
 
 
 # Appendable
@@ -25,13 +29,7 @@ Types match `Fuzz.Opaque.Unique.appendable` with same number.
 
 # Number
 
-Types match `Fuzz.Opaque.Unique.number` with same number.
-
-@docs number, number2
-
-`Fuzz.intRange` and `Fuzz.floatRange`, but for numbers.
-
-@docs numberRange, numberRange2
+Numbers were removed for Elm 0.19, because `elm-test` now fails `Expect.equal` if the arguments are `Float`. There are too many exposed things relying on `Expect.equal` for arbitrary types, that documenting that `Float`s don't work anymore would be way to noisy.
 
 
 # Opaque
@@ -44,12 +42,11 @@ Note that `Fuzzer a` is a different type from `Fuzzer b` etc.
 
 -}
 
-import Fuzz exposing (Fuzzer, bool, custom, float, floatRange, int, intRange, list, map, string, tuple, tuple3, tuple4, tuple5, unit)
-import Random exposing (Generator)
+import Fuzz exposing (Fuzzer, bool, custom, float, floatRange, int, intRange, list, map, string, tuple, tuple3, unit)
 
 
-constant c =
-  map (always c) unit
+constant const =
+    map (always const) unit
 
 
 
@@ -60,35 +57,21 @@ constant c =
 -}
 comparable : Fuzzer ( String, Int )
 comparable =
-  tuple ( constant "comparable", int )
+    tuple ( constant "comparable", int )
 
 
 {-| `Fuzzer comparable2`
 -}
 comparable2 : Fuzzer ( String, Int, String )
 comparable2 =
-  tuple3 ( constant "comparable2", int, constant "\x1F914" )
+    tuple3 ( constant "comparable2", int, constant "\u{1F914}" )
 
 
 {-| `Fuzzer comparable3`
 -}
 comparable3 : Fuzzer ( String, Int, Char )
 comparable3 =
-  tuple3 ( constant "comparable3", int, constant '\x1F917' )
-
-
-{-| `Fuzzer comparable4`
--}
-comparable4 : Fuzzer ( String, Int, Float )
-comparable4 =
-  tuple3 ( constant "comparable4", int, constant pi )
-
-
-{-| `Fuzzer comparable5`
--}
-comparable5 : Fuzzer ( String, Int, Char, Char )
-comparable5 =
-  tuple4 ( constant "comparable5", int, constant '❤', constant '\x1F937' )
+    tuple3 ( constant "comparable3", int, constant '\u{1F917}' )
 
 
 
@@ -99,64 +82,22 @@ comparable5 =
 -}
 appendable : Fuzzer String
 appendable =
-  string
+    string
 
 
 {-| `Fuzzer appendable2`
 -}
 appendable2 : Fuzzer (List Opaque)
 appendable2 =
-  list opaque
+    list opaque
 
 
 type Opaque
-  = Opaque Int
+    = Opaque Int
 
 
 opaque =
-  map Opaque int
-
-
-
--- Numbers. Unfortunately, there are only two, but it's better than nothing.
-
-
-{-| `Fuzzer number`
--}
-number : Fuzzer Float
-number =
-  float
-
-
-{-| `Fuzzer number2`
--}
-number2 : Fuzzer Int
-number2 =
-  int
-
-
-{-| `Fuzz.floatRange`, but for numbers
--}
-numberRange : number -> number -> Fuzzer Float
-numberRange low high =
-  floatRange (numToFloat low) (numToFloat high)
-
-
-{-| `Fuzz.intRange`, but for numbers
--}
-numberRange2 : number -> number -> Fuzzer Int
-numberRange2 low high =
-  intRange (floor (numToFloat low)) (ceiling (numToFloat high))
-
-
-numToFloat : number -> Float
-numToFloat n =
-  case toString n |> String.toFloat of
-    Err _ ->
-      Debug.crash "toString and String.toFloat don't agree"
-
-    Ok f ->
-      f
+    map Opaque int
 
 
 
@@ -164,260 +105,260 @@ numToFloat n =
 
 
 type A
-  = A Int
+    = A Int
 
 
 {-| -}
 a : Fuzzer A
 a =
-  map A int
+    map A int
 
 
 type B
-  = B Int
+    = B Int
 
 
 {-| -}
 b : Fuzzer B
 b =
-  map B int
+    map B int
 
 
 type C
-  = C Int
+    = C Int
 
 
 {-| -}
 c : Fuzzer C
 c =
-  map C int
+    map C int
 
 
 type D
-  = D Int
+    = D Int
 
 
 {-| -}
 d : Fuzzer D
 d =
-  map D int
+    map D int
 
 
 type E
-  = E Int
+    = E Int
 
 
 {-| -}
 e : Fuzzer E
 e =
-  map E int
+    map E int
 
 
 type F
-  = F Int
+    = F Int
 
 
 {-| -}
 f : Fuzzer F
 f =
-  map F int
+    map F int
 
 
 type G
-  = G Int
+    = G Int
 
 
 {-| -}
 g : Fuzzer G
 g =
-  map G int
+    map G int
 
 
 type H
-  = H Int
+    = H Int
 
 
 {-| -}
 h : Fuzzer H
 h =
-  map H int
+    map H int
 
 
 type I
-  = I Int
+    = I Int
 
 
 {-| -}
 i : Fuzzer I
 i =
-  map I int
+    map I int
 
 
 type J
-  = J Int
+    = J Int
 
 
 {-| -}
 j : Fuzzer J
 j =
-  map J int
+    map J int
 
 
 type K
-  = K Int
+    = K Int
 
 
 {-| -}
 k : Fuzzer K
 k =
-  map K int
+    map K int
 
 
 type L
-  = L Int
+    = L Int
 
 
 {-| -}
 l : Fuzzer L
 l =
-  map L int
+    map L int
 
 
 type M
-  = M Int
+    = M Int
 
 
 {-| -}
 m : Fuzzer M
 m =
-  map M int
+    map M int
 
 
 type N
-  = N Int
+    = N Int
 
 
 {-| -}
 n : Fuzzer N
 n =
-  map N int
+    map N int
 
 
 type O
-  = O Int
+    = O Int
 
 
 {-| -}
 o : Fuzzer O
 o =
-  map O int
+    map O int
 
 
 type P
-  = P Int
+    = P Int
 
 
 {-| -}
 p : Fuzzer P
 p =
-  map P int
+    map P int
 
 
 type Q
-  = Q Int
+    = Q Int
 
 
 {-| -}
 q : Fuzzer Q
 q =
-  map Q int
+    map Q int
 
 
 type R
-  = R Int
+    = R Int
 
 
 {-| -}
 r : Fuzzer R
 r =
-  map R int
+    map R int
 
 
 type S
-  = S Int
+    = S Int
 
 
 {-| -}
 s : Fuzzer S
 s =
-  map S int
+    map S int
 
 
 type T
-  = T Int
+    = T Int
 
 
 {-| -}
 t : Fuzzer T
 t =
-  map T int
+    map T int
 
 
 type U
-  = U Int
+    = U Int
 
 
 {-| -}
 u : Fuzzer U
 u =
-  map U int
+    map U int
 
 
 type V
-  = V Int
+    = V Int
 
 
 {-| -}
 v : Fuzzer V
 v =
-  map V int
+    map V int
 
 
 type W
-  = W Int
+    = W Int
 
 
 {-| -}
 w : Fuzzer W
 w =
-  map W int
+    map W int
 
 
 type X
-  = X Int
+    = X Int
 
 
 {-| -}
 x : Fuzzer X
 x =
-  map X int
+    map X int
 
 
 type Y
-  = Y Int
+    = Y Int
 
 
 {-| -}
 y : Fuzzer Y
 y =
-  map Y int
+    map Y int
 
 
 type Z
-  = Z Int
+    = Z Int
 
 
 {-| -}
 z : Fuzzer Z
 z =
-  map Z int
+    map Z int

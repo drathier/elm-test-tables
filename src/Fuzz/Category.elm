@@ -1,4 +1,12 @@
-module Fuzz.Category exposing (andThenv1, andThenv2, andThenv3, mapv1, mapv2, mapv3)
+module Fuzz.Category
+    exposing
+        ( andThenv1
+        , andThenv2
+        , andThenv3
+        , mapv1
+        , mapv2
+        , mapv3
+        )
 
 {-| Fuzz.Category provides fuzz tests for common functions, like `map` and `andThen`.
 
@@ -50,8 +58,8 @@ Actually, the real laws aren't quite as strict as what I wrote above. In order t
 --
 
 import Expect
-import Fuzz exposing (Fuzzer, char, list, string, tuple3)
-import Fuzz.Opaque exposing (a, appendable, number)
+import Fuzz exposing (Fuzzer, char, float, list, string, tuple3)
+import Fuzz.Opaque exposing (a, appendable)
 import Test exposing (Test, describe, fuzz, fuzz2)
 
 
@@ -61,137 +69,137 @@ import Test exposing (Test, describe, fuzz, fuzz2)
 
 {-| This function helps you test your `T.map` function, for every module `T` you can think of.
 -}
-mapv1 : ((number -> number) -> la -> la) -> (Fuzzer Float -> Fuzzer la) -> Test
+mapv1 : ((Float -> Float) -> la -> la) -> (Fuzzer Float -> Fuzzer la) -> Test
 mapv1 fmap afuzz =
-  describe "test .map v1"
-    [ fuzz (afuzz number) "make sure `map identity == identity`" <|
-        \a -> a |> fmap identity |> toString |> Expect.equal (a |> identity |> toString)
-    , fuzz (afuzz number) "make sure `map (f << g) == map f << map g`" <|
-        let
-          f a =
-            a * 5
+    describe "test .map v1"
+        [ fuzz (afuzz float) "make sure `map identity == identity`" <|
+            \a -> a |> fmap identity |> Expect.equal (a |> identity)
+        , fuzz (afuzz float) "make sure `map (f << g) == map f << map g`" <|
+            let
+                f a =
+                    a * 5
 
-          g a =
-            a + 2
-        in
-        \a -> a |> fmap (f << g) |> Expect.equal (a |> (fmap f << fmap g))
-    ]
+                g a =
+                    a + 2
+            in
+            \a -> a |> fmap (f << g) |> Expect.equal (a |> (fmap f << fmap g))
+        ]
 
 
 {-| Another version of the `map` test helper, with a new set of types.
 -}
 mapv2 : ((String -> String) -> la -> la) -> (Fuzzer String -> Fuzzer la) -> Test
 mapv2 fmap afuzz =
-  describe "test .map v2"
-    [ fuzz (afuzz appendable) "make sure `map identity == identity`" <|
-        \a -> a |> fmap identity |> toString |> Expect.equal (a |> identity |> toString)
-    , fuzz (afuzz appendable) "make sure `map (f << g) == map f << map g`" <|
-        let
-          f a =
-            a ++ "f"
+    describe "test .map v2"
+        [ fuzz (afuzz appendable) "make sure `map identity == identity`" <|
+            \a -> a |> fmap identity |> Expect.equal (a |> identity)
+        , fuzz (afuzz appendable) "make sure `map (f << g) == map f << map g`" <|
+            let
+                f a =
+                    a ++ "f"
 
-          g a =
-            a ++ "g"
-        in
-        \a -> a |> fmap (f << g) |> Expect.equal (a |> (fmap f << fmap g))
-    ]
+                g a =
+                    a ++ "g"
+            in
+            \a -> a |> fmap (f << g) |> Expect.equal (a |> (fmap f << fmap g))
+        ]
 
 
 {-| A third version of the `map` test helper, with a third set of types.
 -}
 mapv3 : ((List Char -> List Char) -> la -> la) -> (Fuzzer (List Char) -> Fuzzer la) -> Test
 mapv3 fmap afuzz =
-  describe "test .map v3"
-    [ fuzz (afuzz (list char)) "make sure `map identity == identity`" <|
-        \a -> a |> fmap identity |> toString |> Expect.equal (a |> identity |> toString)
-    , fuzz (afuzz (list char)) "make sure `map (f << g) == map f << map g`" <|
-        let
-          f a =
-            a ++ [ 'x' ]
+    describe "test .map v3"
+        [ fuzz (afuzz (list char)) "make sure `map identity == identity`" <|
+            \a -> a |> fmap identity |> Expect.equal (a |> identity)
+        , fuzz (afuzz (list char)) "make sure `map (f << g) == map f << map g`" <|
+            let
+                f a =
+                    a ++ [ 'x' ]
 
-          g a =
-            a ++ [ 'y' ]
-        in
-        \a -> a |> fmap (f << g) |> Expect.equal (a |> (fmap f << fmap g))
-    ]
+                g a =
+                    a ++ [ 'y' ]
+            in
+            \a -> a |> fmap (f << g) |> Expect.equal (a |> (fmap f << fmap g))
+        ]
 
 
 {-| This function helps you test your `T.andThen` function, for every module `T` you can think of.
 -}
-andThenv1 : (number -> fa) -> ((number -> fa) -> fa -> fa) -> (Fuzzer Float -> Fuzzer fa) -> Test
+andThenv1 : (Float -> fa) -> ((Float -> fa) -> fa -> fa) -> (Fuzzer Float -> Fuzzer fa) -> Test
 andThenv1 singleton andThen afuzz =
-  let
-    f a =
-      singleton (a + 7)
+    let
+        f a =
+            singleton (a + 7)
 
-    g a =
-      singleton (a * 3)
+        g a =
+            singleton (a * 3)
 
-    thing =
-      number
+        thing =
+            float
 
-    m =
-      afuzz thing
-  in
-  describe "andThenv1"
-    [ fuzz thing "left identity" <|
-        \a -> singleton a |> andThen f |> Expect.equal (f a)
-    , fuzz2 thing m "right identity" <|
-        \a m -> m |> andThen singleton |> Expect.equal m
-    , fuzz2 thing m "associativity" <|
-        \a m -> (m |> andThen f) |> andThen g |> Expect.equal (m |> andThen (\x -> f x |> andThen g))
-    ]
+        monad =
+            afuzz thing
+    in
+    describe "andThenv1"
+        [ fuzz thing "left identity" <|
+            \a -> singleton a |> andThen f |> Expect.equal (f a)
+        , fuzz2 thing monad "right identity" <|
+            \a m -> m |> andThen singleton |> Expect.equal m
+        , fuzz2 thing monad "associativity" <|
+            \a m -> (m |> andThen f) |> andThen g |> Expect.equal (m |> andThen (\x -> f x |> andThen g))
+        ]
 
 
 {-| Another version of the `andThen` test helper, with a new set of types.
 -}
 andThenv2 : (String -> fa) -> ((String -> fa) -> fa -> fa) -> (Fuzzer String -> Fuzzer fa) -> Test
 andThenv2 singleton andThen afuzz =
-  let
-    f a =
-      singleton (a ++ "f")
+    let
+        f a =
+            singleton (a ++ "f")
 
-    g a =
-      singleton (a ++ "g")
+        g a =
+            singleton (a ++ "g")
 
-    thing =
-      string
+        thing =
+            string
 
-    m =
-      afuzz thing
-  in
-  describe "andThenv2"
-    [ fuzz thing "left identity" <|
-        \a -> singleton a |> andThen f |> Expect.equal (f a)
-    , fuzz2 thing m "right identity" <|
-        \a m -> m |> andThen singleton |> Expect.equal m
-    , fuzz2 thing m "associativity" <|
-        \a m -> (m |> andThen f) |> andThen g |> Expect.equal (m |> andThen (\x -> f x |> andThen g))
-    ]
+        monad =
+            afuzz thing
+    in
+    describe "andThenv2"
+        [ fuzz thing "left identity" <|
+            \a -> singleton a |> andThen f |> Expect.equal (f a)
+        , fuzz2 thing monad "right identity" <|
+            \a m -> m |> andThen singleton |> Expect.equal m
+        , fuzz2 thing monad "associativity" <|
+            \a m -> (m |> andThen f) |> andThen g |> Expect.equal (m |> andThen (\x -> f x |> andThen g))
+        ]
 
 
 {-| A third version of the `map` test helper, with a third set of types.
 -}
 andThenv3 : (List Char -> fa) -> ((List Char -> fa) -> fa -> fa) -> (Fuzzer (List Char) -> Fuzzer fa) -> Test
 andThenv3 singleton andThen afuzz =
-  let
-    f a =
-      singleton (a ++ [ 'f' ])
+    let
+        f a =
+            singleton (a ++ [ 'f' ])
 
-    g a =
-      singleton (a ++ [ 'g' ])
+        g a =
+            singleton (a ++ [ 'g' ])
 
-    thing =
-      list char
+        thing =
+            list char
 
-    m =
-      afuzz thing
-  in
-  describe "andThenv3"
-    [ fuzz thing "left identity" <|
-        \a -> singleton a |> andThen f |> Expect.equal (f a)
-    , fuzz2 thing m "right identity" <|
-        \a m -> m |> andThen singleton |> Expect.equal m
-    , fuzz2 thing m "associativity" <|
-        \a m -> (m |> andThen f) |> andThen g |> Expect.equal (m |> andThen (\x -> f x |> andThen g))
-    ]
+        monad =
+            afuzz thing
+    in
+    describe "andThenv3"
+        [ fuzz thing "left identity" <|
+            \a -> singleton a |> andThen f |> Expect.equal (f a)
+        , fuzz2 thing monad "right identity" <|
+            \a m -> m |> andThen singleton |> Expect.equal m
+        , fuzz2 thing monad "associativity" <|
+            \a m -> (m |> andThen f) |> andThen g |> Expect.equal (m |> andThen (\x -> f x |> andThen g))
+        ]

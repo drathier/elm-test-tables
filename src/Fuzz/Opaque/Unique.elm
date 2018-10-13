@@ -1,4 +1,9 @@
-module Fuzz.Opaque.Unique exposing (a, appendable, b, c, comparable, comparable2, comparable3, comparable4, comparable5, d, e, f, g, h, i, j, k, l, m, n, number, number2, o, p, q, r, s, t, u, v, w, x, y, z)
+module Fuzz.Opaque.Unique exposing
+    ( comparable, comparable2, comparable3
+    , appendable
+    , number, number2
+    , a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z
+    )
 
 {-| See docs for `Fuzz.Opaque`. This is a collection of those same fuzzers, but constructed in a way as to never give duplicate values. That is, if you generate a list of these values, there will be a very very low probability of a duplicate element in that list.
 
@@ -9,7 +14,7 @@ Types match `Fuzz.Opaque` with same name. Collision risk between `Fuzz.Opaque.a`
 
 Types match `Fuzz.Opaque.comparable` with same number.
 
-@docs comparable, comparable2, comparable3, comparable4, comparable5
+@docs comparable, comparable2, comparable3
 
 
 # Appendable
@@ -36,13 +41,12 @@ Note that `Fuzzer a` is a different type from `Fuzzer b` etc.
 
 -}
 
-import Fuzz exposing (Fuzzer, custom, floatRange, intRange, list, map, tuple, tuple3, tuple4, tuple5, unit)
+import Fuzz exposing (Fuzzer, custom, floatRange, intRange, list, map, tuple, tuple3, unit)
 import Fuzz.Unique as Unique
-import Random exposing (Generator)
 
 
-constant c =
-  map (always c) unit
+constant const =
+    map (always const) unit
 
 
 
@@ -53,35 +57,21 @@ constant c =
 -}
 comparable : Fuzzer ( String, Int )
 comparable =
-  tuple ( constant "uniqueComparable", Unique.int )
+    tuple ( constant "uniqueComparable", Unique.int )
 
 
 {-| `Fuzzer comparable2`
 -}
 comparable2 : Fuzzer ( String, Int, String )
 comparable2 =
-  tuple3 ( constant "uniqueComparable2", Unique.int, constant "\x1F914" )
+    tuple3 ( constant "uniqueComparable2", Unique.int, constant "\u{1F914}" )
 
 
 {-| `Fuzzer comparable3`
 -}
 comparable3 : Fuzzer ( String, Int, Char )
 comparable3 =
-  tuple3 ( constant "uniqueComparable3", Unique.int, constant '\x1F917' )
-
-
-{-| `Fuzzer comparable4`
--}
-comparable4 : Fuzzer ( String, Int, Float )
-comparable4 =
-  tuple3 ( constant "uniqueComparable4", Unique.int, constant pi )
-
-
-{-| `Fuzzer comparable5`
--}
-comparable5 : Fuzzer ( String, Int, Char, Char )
-comparable5 =
-  tuple4 ( constant "uniqueComparable5", Unique.int, constant '❤', constant '\x1F937' )
+    tuple3 ( constant "uniqueComparable3", Unique.int, constant '\u{1F917}' )
 
 
 
@@ -92,15 +82,15 @@ comparable5 =
 -}
 appendable : Fuzzer String
 appendable =
-  Unique.string
+    Unique.string
 
 
 type Opaque
-  = Opaque Int
+    = Opaque Int
 
 
 opaque =
-  map Opaque Unique.int
+    map Opaque Unique.int
 
 
 
@@ -111,14 +101,14 @@ opaque =
 -}
 number : Fuzzer Float
 number =
-  Unique.float
+    Unique.float
 
 
 {-| `Fuzzer number2`
 -}
 number2 : Fuzzer Int
 number2 =
-  Unique.int
+    Unique.int
 
 
 
@@ -126,260 +116,260 @@ number2 =
 
 
 type A
-  = A Int
+    = A Int
 
 
 {-| -}
 a : Fuzzer A
 a =
-  map A Unique.int
+    map A Unique.int
 
 
 type B
-  = B Int
+    = B Int
 
 
 {-| -}
 b : Fuzzer B
 b =
-  map B Unique.int
+    map B Unique.int
 
 
 type C
-  = C Int
+    = C Int
 
 
 {-| -}
 c : Fuzzer C
 c =
-  map C Unique.int
+    map C Unique.int
 
 
 type D
-  = D Int
+    = D Int
 
 
 {-| -}
 d : Fuzzer D
 d =
-  map D Unique.int
+    map D Unique.int
 
 
 type E
-  = E Int
+    = E Int
 
 
 {-| -}
 e : Fuzzer E
 e =
-  map E Unique.int
+    map E Unique.int
 
 
 type F
-  = F Int
+    = F Int
 
 
 {-| -}
 f : Fuzzer F
 f =
-  map F Unique.int
+    map F Unique.int
 
 
 type G
-  = G Int
+    = G Int
 
 
 {-| -}
 g : Fuzzer G
 g =
-  map G Unique.int
+    map G Unique.int
 
 
 type H
-  = H Int
+    = H Int
 
 
 {-| -}
 h : Fuzzer H
 h =
-  map H Unique.int
+    map H Unique.int
 
 
 type I
-  = I Int
+    = I Int
 
 
 {-| -}
 i : Fuzzer I
 i =
-  map I Unique.int
+    map I Unique.int
 
 
 type J
-  = J Int
+    = J Int
 
 
 {-| -}
 j : Fuzzer J
 j =
-  map J Unique.int
+    map J Unique.int
 
 
 type K
-  = K Int
+    = K Int
 
 
 {-| -}
 k : Fuzzer K
 k =
-  map K Unique.int
+    map K Unique.int
 
 
 type L
-  = L Int
+    = L Int
 
 
 {-| -}
 l : Fuzzer L
 l =
-  map L Unique.int
+    map L Unique.int
 
 
 type M
-  = M Int
+    = M Int
 
 
 {-| -}
 m : Fuzzer M
 m =
-  map M Unique.int
+    map M Unique.int
 
 
 type N
-  = N Int
+    = N Int
 
 
 {-| -}
 n : Fuzzer N
 n =
-  map N Unique.int
+    map N Unique.int
 
 
 type O
-  = O Int
+    = O Int
 
 
 {-| -}
 o : Fuzzer O
 o =
-  map O Unique.int
+    map O Unique.int
 
 
 type P
-  = P Int
+    = P Int
 
 
 {-| -}
 p : Fuzzer P
 p =
-  map P Unique.int
+    map P Unique.int
 
 
 type Q
-  = Q Int
+    = Q Int
 
 
 {-| -}
 q : Fuzzer Q
 q =
-  map Q Unique.int
+    map Q Unique.int
 
 
 type R
-  = R Int
+    = R Int
 
 
 {-| -}
 r : Fuzzer R
 r =
-  map R Unique.int
+    map R Unique.int
 
 
 type S
-  = S Int
+    = S Int
 
 
 {-| -}
 s : Fuzzer S
 s =
-  map S Unique.int
+    map S Unique.int
 
 
 type T
-  = T Int
+    = T Int
 
 
 {-| -}
 t : Fuzzer T
 t =
-  map T Unique.int
+    map T Unique.int
 
 
 type U
-  = U Int
+    = U Int
 
 
 {-| -}
 u : Fuzzer U
 u =
-  map U Unique.int
+    map U Unique.int
 
 
 type V
-  = V Int
+    = V Int
 
 
 {-| -}
 v : Fuzzer V
 v =
-  map V Unique.int
+    map V Unique.int
 
 
 type W
-  = W Int
+    = W Int
 
 
 {-| -}
 w : Fuzzer W
 w =
-  map W Unique.int
+    map W Unique.int
 
 
 type X
-  = X Int
+    = X Int
 
 
 {-| -}
 x : Fuzzer X
 x =
-  map X Unique.int
+    map X Unique.int
 
 
 type Y
-  = Y Int
+    = Y Int
 
 
 {-| -}
 y : Fuzzer Y
 y =
-  map Y Unique.int
+    map Y Unique.int
 
 
 type Z
-  = Z Int
+    = Z Int
 
 
 {-| -}
 z : Fuzzer Z
 z =
-  map Z Unique.int
+    map Z Unique.int
