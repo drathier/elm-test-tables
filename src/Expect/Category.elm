@@ -26,13 +26,6 @@ or
             { f = (++), a = a, b = b, c = c }
                 |> Expect.all [ associative ]
 
-or
-
-    fuzz3 number number number "max" <|
-        \a b c ->
-            { f = max, a = a, b = b, c = c }
-                |> Expect.all [ zeroElement (1 / 0), identityElement (-1 / 0), associative, commutative, idempotent ]
-
 
 # The properties to choose from
 

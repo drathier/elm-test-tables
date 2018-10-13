@@ -14,7 +14,7 @@ you can replace it with a `fuzzTable` and add that edge case, so that elm-test w
 
 Then that particular bug will never make it through your tests again!
 
-#FuzzTable
+# FuzzTable
 
 @docs fuzzTable, fuzzTable2, fuzzTable3
 

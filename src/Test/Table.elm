@@ -1,6 +1,6 @@
 module Test.Table exposing (testTable, testTable2, testTable3)
 
-{-| `Test.Table` provides tools for writing table-driven tests. Only use `Test.Table` if you have a bunch of similar test cases that can all be reasonably described as a group. If you can, use `Fuzz.Table` instead.
+{-| Test.Table provides tools for writing table-driven tests. Only use `Test.Table` if you have a bunch of similar test cases that can all be reasonably described as a group. If you can, use `Fuzz.Table` instead.
 
     testTable3 "pythagorean triples"
         [ ( 3, 4, 5 )
@@ -27,7 +27,7 @@ module Test.Table exposing (testTable, testTable2, testTable3)
         ]
         (\a b c -> (a * a) + (b * b) |> Expect.equal (c * c))
 
-#TestTable
+# TestTable
 
 @docs testTable, testTable2, testTable3
 

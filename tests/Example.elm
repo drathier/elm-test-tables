@@ -17,7 +17,7 @@ suite =
                 \a -> a |> Expect.notEqual 4711
             , fuzz3 int int int "Expect things to not be equal" <|
                 \a b c -> [ a, b, c ] |> Expect.notEqual [ b, c, a ]
-            , fuzz2 int string "Expect string to not be numbers" <|
+            , fuzz2 int string "Expect string to not be the string representation of an int" <|
                 \a b -> a |> String.fromInt |> Expect.notEqual b
             ]
 

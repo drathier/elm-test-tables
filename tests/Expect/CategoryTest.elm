@@ -26,7 +26,7 @@ test =
             ]
         , describe "*"
             [ fuzz3 (intRange -14 27) (intRange -14 27) (intRange -14 27) "* int" <|
-                -- limit numbers to avoid multiplicative overflow
+                -- limit ranges to avoid multiplicative overflow
                 \a b c -> { f = (*), a = a, b = b, c = c } |> Expect.all [ zeroElement 0, identityElement 1, associative, commutative ]
             ]
         , describe "min/max"

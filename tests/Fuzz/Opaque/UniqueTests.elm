@@ -1,4 +1,4 @@
-module Fuzz.Opaque.UniqueTests exposing (appendables, comparables, expectDuplicateFreeList, numberRanges, numbers, opaques)
+module Fuzz.Opaque.UniqueTests exposing (appendables, comparables, expectDuplicateFreeList, opaques)
 
 import Expect
 import Expect.Category exposing (associative, identityElement)
@@ -23,22 +23,6 @@ comparables =
         [ fuzz (list comparable) "comparable" expectDuplicateFreeList
         , fuzz (list comparable2) "comparable2" expectDuplicateFreeList
         , fuzz (list comparable3) "comparable3" expectDuplicateFreeList
-        ]
-
-
-numbers =
-    describe "numbers"
-        [ fuzz (list number) "number" expectDuplicateFreeList
-        , fuzz (list number2) "number2" expectDuplicateFreeList
-        ]
-
-
-numberRanges =
-    describe "numberRanges"
-        [ fuzz (list number) "numberRange" <|
-            expectDuplicateFreeList
-        , fuzz (list number2) "numberRange2" <|
-            expectDuplicateFreeList
         ]
 
 
@@ -78,12 +62,11 @@ opaques =
 --   test "asdf" (\_ -> expectDuplicateFreeList [ 1, 2, 3, 1, 5, 6 ])
 
 
-
 expectDuplicateFreeList lst =
     case lst of
         x :: xs ->
             if List.member x xs then
-                Expect.fail ("found a duplicate element")
+                Expect.fail "found a duplicate element"
 
             else
                 expectDuplicateFreeList xs

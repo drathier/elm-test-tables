@@ -1,7 +1,6 @@
 module Fuzz.Opaque.Unique exposing
     ( comparable, comparable2, comparable3
     , appendable
-    , number, number2
     , a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z
     )
 
@@ -26,9 +25,7 @@ Types match `Fuzz.Opaque.appendable` with same number.
 
 # Number
 
-Types match `Fuzz.Opaque.number` with same number.
-
-@docs number, number2
+Numbers were removed for Elm 0.19, because `elm-test` now fails `Expect.equal` if the arguments are `Float`. There are too many exposed things relying on `Expect.equal` for arbitrary types, that documenting that `Float`s don't work anymore would be way to noisy.
 
 
 # Opaque
@@ -93,22 +90,6 @@ opaque =
     map Opaque Unique.int
 
 
-
--- Numbers
-
-
-{-| `Fuzzer number`
--}
-number : Fuzzer Float
-number =
-    Unique.float
-
-
-{-| `Fuzzer number2`
--}
-number2 : Fuzzer Int
-number2 =
-    Unique.int
 
 
 
