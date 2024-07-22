@@ -3,7 +3,7 @@
     "name": "drathier/elm-test-tables",
     "summary": "Elm-test with table-driven tests. Your primary defence against regressions.",
     "license": "BSD-3-Clause",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "exposed-modules": [
         "Expect.Category",
         "Fuzz.Opaque.Unique",
