@@ -11,7 +11,6 @@ import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer, int)
 import Random exposing (Generator)
 import Random.Extra as Random
-import Shrink exposing (Shrinker)
 import Test exposing (Test)
 
 
@@ -22,13 +21,13 @@ import Test exposing (Test)
 {-| -}
 int : Fuzzer Int
 int =
-    Fuzz.custom
+    Fuzz.fromGenerator
         (Random.frequency
             ( 1, Random.int 0 (Random.maxInt - Random.minInt) )
             [ ( 1, Random.int (Random.minInt - Random.maxInt) 0 )
             ]
         )
-        Shrink.int
+
 
 
 {-| -}
@@ -41,7 +40,7 @@ float =
                 [ ( 1, Random.float (toFloat <| Random.minInt - Random.maxInt) 0 )
                 ]
     in
-    Fuzz.custom generator Shrink.float
+    Fuzz.fromGenerator generator
 
 
 {-| -}
@@ -53,14 +52,14 @@ string =
             Random.int 100 1000
                 |> Random.andThen (lengthString charGenerator)
     in
-    Fuzz.custom asciiGenerator Shrink.string
+    Fuzz.fromGenerator asciiGenerator
 
 
 {-| Note: there are only ~113k possible unicode characters, so the probability of at least one duplicate `Char` in a `list char` is actually pretty high.
 -}
 char : Fuzzer Char
 char =
-    Fuzz.custom charGenerator Shrink.character
+    Fuzz.fromGenerator charGenerator
 
 
 

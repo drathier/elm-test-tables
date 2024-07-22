@@ -42,7 +42,7 @@ Note that `Fuzzer a` is a different type from `Fuzzer b` etc.
 
 -}
 
-import Fuzz exposing (Fuzzer, bool, custom, float, floatRange, int, intRange, list, map, string, tuple, tuple3, unit)
+import Fuzz exposing (Fuzzer, int, list, map, string, pair, triple, unit)
 
 
 constant const =
@@ -57,21 +57,21 @@ constant const =
 -}
 comparable : Fuzzer ( String, Int )
 comparable =
-    tuple ( constant "comparable", int )
+    pair ( constant "comparable") int
 
 
 {-| `Fuzzer comparable2`
 -}
 comparable2 : Fuzzer ( String, Int, String )
 comparable2 =
-    tuple3 ( constant "comparable2", int, constant "\u{1F914}" )
+    triple ( constant "comparable2") int (constant "\u{1F914}" )
 
 
 {-| `Fuzzer comparable3`
 -}
 comparable3 : Fuzzer ( String, Int, Char )
 comparable3 =
-    tuple3 ( constant "comparable3", int, constant '\u{1F917}' )
+    triple ( constant "comparable3") int (constant '\u{1F917}' )
 
 
 

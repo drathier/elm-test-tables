@@ -34,9 +34,6 @@ or
 -}
 
 import Expect exposing (Expectation)
-import Fuzz exposing (Fuzzer, tuple3)
-import Fuzz.Opaque exposing (a)
-import Test exposing (Test, describe, fuzz)
 
 
 {-| Associativity is the property that `(a ⊕ b) ⊕ c = a ⊕ (b ⊕ c)`, or `f (f a b) c = f a (f b c)`, for some infix operator `⊕`, or binary function `f`.

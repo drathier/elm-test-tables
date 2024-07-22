@@ -58,7 +58,7 @@ Actually, the real laws aren't quite as strict as what I wrote above. In order t
 --
 
 import Expect
-import Fuzz exposing (Fuzzer, char, float, list, string, tuple3)
+import Fuzz exposing (Fuzzer, char, niceFloat, list, string)
 import Fuzz.Opaque exposing (a, appendable)
 import Test exposing (Test, describe, fuzz, fuzz2)
 
@@ -72,9 +72,9 @@ import Test exposing (Test, describe, fuzz, fuzz2)
 mapv1 : ((Float -> Float) -> la -> la) -> (Fuzzer Float -> Fuzzer la) -> Test
 mapv1 fmap afuzz =
     describe "test .map v1"
-        [ fuzz (afuzz float) "make sure `map identity == identity`" <|
+        [ fuzz (afuzz niceFloat) "make sure `map identity == identity`" <|
             \a -> a |> fmap identity |> Expect.equal (a |> identity)
-        , fuzz (afuzz float) "make sure `map (f << g) == map f << map g`" <|
+        , fuzz (afuzz niceFloat) "make sure `map (f << g) == map f << map g`" <|
             let
                 f a =
                     a * 5
@@ -136,7 +136,7 @@ andThenv1 singleton andThen afuzz =
             singleton (a * 3)
 
         thing =
-            float
+            niceFloat
 
         monad =
             afuzz thing

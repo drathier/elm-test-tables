@@ -1,9 +1,8 @@
 module Example exposing (appendables, comparables, opaques, positive, suite, tableTests)
 
 import Expect exposing (Expectation)
-import Fuzz exposing (Fuzzer, float, int, list, string, tuple)
-import Fuzz.Opaque exposing (a, appendable, b, comparable, comparable2)
-import Fuzz.Table exposing (..)
+import Fuzz exposing (Fuzzer, int, list, string, pair)
+import Fuzz.Opaque exposing (a, appendable, b, comparable)
 import Test exposing (..)
 import Test.Table exposing (..)
 
@@ -51,7 +50,7 @@ positive =
         [ fuzz int "expect input to be positive" <|
             abs
                 >> Expect.greaterThan -1
-        , fuzz (tuple ( int, int )) "expect sum to be positive" <|
+        , fuzz (pair int int) "expect sum to be positive" <|
             (\( a, b ) -> ( abs a, abs b ))
                 >> (\( a, b ) -> a + b |> Expect.greaterThan -1)
         , fuzz2 int int "expect sum to be positive using a let binding" <|
@@ -104,7 +103,8 @@ comparables =
                     _ =
                         List.sort l
                 in
-                Expect.true "Dummy test; this should compile" True
+                Expect.onFail "Dummy test; this should compile" <|
+                  Expect.equal True True
 
         -- dummy test; this shouldn't compile, because all comparable have distinct types
         -- , fuzz2 comparable comparable2 "does not compile" <|

@@ -15,13 +15,13 @@
         "Fuzz.Unique",
         "Test.Table"
     ],
-    "elm-version": "0.19.0 <= v < 0.20.0",
+    "elm-version": "0.19.1 <= v < 0.20.0",
     "dependencies": {
         "elm/core": "1.0.0 <= v < 2.0.0",
         "elm/json": "1.0.0 <= v < 2.0.0",
         "elm/random": "1.0.0 <= v < 2.0.0",
         "elm-community/random-extra": "3.0.0 <= v < 4.0.0",
-        "elm-explorations/test": "1.1.0 <= v < 2.0.0"
+        "elm-explorations/test": "2.1.1 <= v < 3.0.0"
     },
     "test-dependencies": {}
 }

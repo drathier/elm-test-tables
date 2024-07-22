@@ -3,7 +3,7 @@ module Expect.CategoryTest exposing (bitwiseTests, bound32, intMax, intMin, test
 import Bitwise
 import Expect
 import Expect.Category exposing (..)
-import Fuzz exposing (float, floatRange, int, intRange, list, string)
+import Fuzz exposing (int, intRange, list, string)
 import Fuzz.Opaque exposing (appendable, appendable2)
 import Test exposing (describe, fuzz3)
 

@@ -1,14 +1,10 @@
 module Fuzz.CategoryTest exposing (andThenTests, mapTests, setConcatMap)
 
 import Array
-import Dict
-import Expect exposing (Expectation)
-import Fuzz exposing (Fuzzer, float, int, list, string, tuple)
+import Fuzz exposing (Fuzzer)
 import Fuzz.Category exposing (..)
-import Fuzz.Opaque exposing (a, appendable, b, comparable, comparable2)
 import Set exposing (Set)
 import Test exposing (..)
-import Test.Table exposing (..)
 
 
 mapTests =

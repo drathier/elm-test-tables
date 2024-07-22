@@ -38,7 +38,7 @@ Note that `Fuzzer a` is a different type from `Fuzzer b` etc.
 
 -}
 
-import Fuzz exposing (Fuzzer, custom, floatRange, intRange, list, map, tuple, tuple3, unit)
+import Fuzz exposing (Fuzzer, map, pair, triple, unit)
 import Fuzz.Unique as Unique
 
 
@@ -54,21 +54,21 @@ constant const =
 -}
 comparable : Fuzzer ( String, Int )
 comparable =
-    tuple ( constant "uniqueComparable", Unique.int )
+    pair ( constant "uniqueComparable") Unique.int
 
 
 {-| `Fuzzer comparable2`
 -}
 comparable2 : Fuzzer ( String, Int, String )
 comparable2 =
-    tuple3 ( constant "uniqueComparable2", Unique.int, constant "\u{1F914}" )
+    triple ( constant "uniqueComparable2") Unique.int (constant "\u{1F914}" )
 
 
 {-| `Fuzzer comparable3`
 -}
 comparable3 : Fuzzer ( String, Int, Char )
 comparable3 =
-    tuple3 ( constant "uniqueComparable3", Unique.int, constant '\u{1F917}' )
+    triple ( constant "uniqueComparable3") Unique.int (constant '\u{1F917}' )
 
 
 
